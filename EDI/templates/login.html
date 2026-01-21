@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CryptexQ — Login</title>
+
+  <style>
+  :root {
+    --bg: #071026;
+    --panel: rgba(15,23,42,0.85);
+    --accent: #00c3ff;
+    --accent2: #8b5cf6;
+    --text: #ffffff;
+    --muted: #9fb0d0;
+    --error: #e63946;
+    --success: #2a9d8f;
+  }
+
+  * { box-sizing: border-box; margin:0; padding:0; }
+
+  body {
+    font-family: "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    scroll-behavior: smooth;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* Navbar */
+  .navbar {
+    background: #0f1724;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 2rem;
+    border-bottom: 2px solid rgba(138, 43, 226, 0.3);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .navbar .logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #c084fc;
+    text-decoration: none;
+  }
+  .navbar .logo span {
+    background: linear-gradient(90deg,#c084fc,#60a5fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-left: 0.4rem;
+  }
+  .navbar .menu {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .navbar .menu a {
+    text-decoration: none;
+    color: #e5e7eb;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+  .navbar .menu a:hover,
+  .navbar .menu .active {
+    color: #60a5fa;
+  }
+
+  .dropdown { position: relative; }
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 2.5rem;
+    left: 0;
+    background: #1a2238;
+    border-radius: 0.5rem;
+    min-width: 150px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    z-index: 10;
+  }
+  .dropdown-content a {
+    display: block;
+    padding: 0.6rem 1rem;
+    color: #e5e7eb;
+    text-decoration: none;
+  }
+  .dropdown-content a:hover {
+    background: #2c3654;
+    color: #60a5fa;
+  }
+  .dropdown:hover .dropdown-content { display: block; }
+
+  .navbar .actions {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .btn {
+    padding: 0.5rem 1rem;
+    border-radius: 0.6rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.3s ease;
+  }
+  .btn-login {
+    background: #1e293b;
+    color: #fbbf24;
+  }
+  .btn-login:hover { background: #334155; }
+  .btn-signup {
+    background: linear-gradient(90deg,#8b5cf6,#3b82f6);
+    color: #fff;
+  }
+  .btn-signup:hover { opacity: 0.9; }
+
+  /* Login Section */
+  .hero {
+    height: 30vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    background: var(--panel);
+  }
+  .hero h1 { font-size: 2.5rem; color: var(--accent); }
+
+  section { padding: 60px 20px; max-width: 500px; margin: auto; }
+  .panel {
+    background: var(--panel);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.5);
+    border: 1px solid rgba(0,195,255,0.3);
+  }
+
+  .panel h2 { text-align: center; margin-bottom: 25px; color: var(--accent); }
+
+  .form-group { margin-bottom: 20px; }
+  label { display: block; margin-bottom: 8px; color: var(--muted); }
+  input[type="text"], input[type="email"], input[type="password"] {
+    width: 100%; padding: 12px; border-radius: 8px; border: none; outline: none;
+    background: rgba(255,255,255,0.08); color: var(--text); font-size: 1rem;
+  }
+
+  input::placeholder { color: #bbb; }
+
+  .remember {
+    display: flex; align-items: center; gap: 10px; font-size: 0.9rem; color: var(--muted);
+  }
+
+  button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  button:hover { transform: scale(1.05); }
+
+  .extra-links { margin-top: 15px; text-align: center; }
+  .extra-links a {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+  .extra-links a:hover { text-decoration: underline; }
+
+  .message-box {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 25px;
+    border-radius: 8px;
+    color: white;
+    z-index: 1000;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0;
+    transform: translateY(-20px);
+    pointer-events: none;
+    font-weight: 500;
+  }
+  .message-box.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .message-box.error {
+    background: var(--error);
+    border: 1px solid #c0392b;
+  }
+  .message-box.success {
+    background: var(--success);
+    border: 1px solid #1abc9c;
+  }
+
+  footer { background: var(--panel); padding: 20px; color: var(--muted); text-align: center; margin-top:40px; }
+  </style>
+</head>
+<body>
+
+<div id="messageBox" class="message-box">
+  <div id="messageText" class="message-text"></div>
+</div>
+
+<header class="navbar">
+  <a href="{{ url_for('index_page') }}" class="logo">🔒 <span>CryptexQ</span></a>
+  <nav class="menu">
+    <a href="{{ url_for('home_page') }}">🏠 Home</a>
+    <div class="dropdown">
+      <a href="{{ url_for('talkroom_page') }}">💬 Chat ▾</a>
+      <div class="dropdown-content">
+        <a href="{{ url_for('talkroom_page') }}">Talkroom</a>
+        <a href="{{ url_for('demo_page') }}">Demo</a>
+      </div>
+    </div>
+    <a href="{{ url_for('team_page') }}">👥 Team</a>
+    <a href="{{ url_for('faq_page') }}">❓ FAQ</a>
+    <div class="dropdown">
+      <a href="#">📄 Legal ▾</a>
+      <div class="dropdown-content">
+        <a href="{{ url_for('terms_page') }}">Terms</a>
+        <a href="{{ url_for('about_page') }}">About</a>
+      </div>
+    </div>
+    <a href="{{ url_for('contact_page') }}">✉ Contact</a>
+  </nav>
+  <div class="actions">
+    <a href="{{ url_for('signup_route') }}" class="btn btn-signup">👤 Sign Up</a>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>🔐 Login</h1>
+</section>
+
+<section>
+  <div class="panel">
+    <h2>Welcome Back</h2>
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="email">Email or Username</label>
+        <input type="text" id="email" name="username" placeholder="Enter your email or username" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+      </div>
+      <div class="form-group remember">
+        <input type="checkbox" id="remember" name="remember">
+        <label for="remember">Remember me</label>
+      </div>
+      <button type="submit">Login</button>
+      <div class="extra-links">
+        <p><a href="/forgetpg">Forgot Password?</a></p>
+        <p>Don’t have an account? <a href="{{ url_for('signup_route') }}">Sign Up</a></p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 CryptexQ — Secure Quantum Messaging</p>
+</footer>
+
+<script>
+function showMessage(message, type) {
+  const box = document.getElementById("messageBox");
+  const text = document.getElementById("messageText");
+  text.textContent = message;
+  box.className = `message-box show ${type}`;
+  setTimeout(() => box.classList.remove("show"), 3000);
+}
+
+document.getElementById("loginForm").addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const username = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
+
+  try {
+    const response = await fetch("/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password })
+    });
+
+    const result = await response.json();
+
+    if (response.ok && result.success) {
+      localStorage.setItem("cryptexq_username", username);
+      showMessage("✅ Login successful! Redirecting...", "success");
+      setTimeout(() => {
+        window.location.href = "/home";
+      }, 1200);
+    } else {
+      showMessage(result.message || "Invalid credentials.", "error");
+    }
+  } catch (err) {
+    console.error(err);
+    showMessage("⚠️ Could not reach server.", "error");
+  }
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>CryptexQ — Contact</title>
+<style>
+  :root{
+    --bg-dark: #071026;
+    --bg-panel: linear-gradient(180deg,#0a1230,#071026);
+    --panel: #0f1724;
+    --panel-strong:#0b1220;
+    --accent1:#8b5cf6;
+    --accent2:#06b6d4;
+    --accent-pink:#ec4899;
+    --text:#e7eef9;
+    --muted:#9fb0d0;
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:Inter, "Segoe UI", Roboto, system-ui, -apple-system, "Helvetica Neue", Arial;
+    background: var(--bg-dark);
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    line-height:1.5;
+  }
+
+  /* Navbar */
+  .navbar {
+    background: #0f1724;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 2rem;
+    border-bottom: 2px solid rgba(138, 43, 226, 0.3);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .navbar .logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #c084fc;
+    text-decoration: none;
+  }
+  .navbar .logo span {
+    background: linear-gradient(90deg,#c084fc,#60a5fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-left: 0.4rem;
+  }
+  .navbar .menu {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .navbar .menu a {
+    text-decoration: none;
+    color: #e5e7eb;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+  .navbar .menu a:hover,
+  .navbar .menu .active {
+    color: #60a5fa;
+  }
+
+  /* Dropdowns */
+  .dropdown { position: relative; }
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 2.5rem;
+    left: 0;
+    background: #1a2238;
+    border-radius: 0.5rem;
+    min-width: 150px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    z-index: 10;
+  }
+  .dropdown-content a {
+    display: block;
+    padding: 0.6rem 1rem;
+    color: #e5e7eb;
+    text-decoration: none;
+  }
+  .dropdown-content a:hover {
+    background: #2c3654;
+    color: #60a5fa;
+  }
+  .dropdown:hover .dropdown-content { display: block; }
+
+  /* Buttons */
+  .navbar .actions {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .btn {
+    padding: 0.5rem 1rem;
+    border-radius: 0.6rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.3s ease;
+  }
+  .btn-login {
+    background: #1e293b;
+    color: #fbbf24;
+  }
+  .btn-login:hover { background: #334155; }
+  .btn-signup {
+    background: linear-gradient(90deg,#8b5cf6,#3b82f6);
+    color: #fff;
+  }
+  .btn-signup:hover { opacity: 0.9; }
+
+  /* Page container */
+  .container{
+    max-width:1200px; margin:32px auto; padding:0 20px;
+  }
+
+  /* Card */
+  .card{
+    position:relative;
+    border-radius:14px;
+    padding:28px;
+    background:var(--panel);
+    overflow:hidden;
+    border:1px solid rgba(139,92,246,0.08);
+    box-shadow:0 12px 30px rgba(2,6,23,0.6);
+  }
+  .card::before{
+    content:"";
+    position:absolute; inset:0;
+    padding:2px; border-radius:14px;
+    background:linear-gradient(120deg,var(--accent1),#3b82f6,var(--accent2));
+    background-size:300% 300%;
+    animation:glowBorder 6s linear infinite;
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;
+            mask-composite:exclude;
+    pointer-events:none;
+  }
+  @keyframes glowBorder{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+
+  .split{ display:grid; grid-template-columns:1fr 420px; gap:28px; align-items:center; }
+  @media (max-width:980px){ .split{grid-template-columns:1fr;} }
+
+  h1{ color:var(--accent1); font-size:28px; margin:0 0 10px 0; }
+  p{ color: #cfe6ff; margin:0 0 16px 0; }
+  h2{ color:#bda7ff; margin-top:18px; margin-bottom:10px; }
+
+  /* form */
+  .contact-form{
+    display:flex; flex-direction:column; gap:12px;
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+    padding:16px; border-radius:12px; border:1px solid rgba(255,255,255,0.02);
+  }
+  label{ font-weight:600; color:var(--muted); font-size:14px; display:block; }
+  .field{ display:flex; flex-direction:column; gap:8px; }
+  input[type="text"], input[type="email"], textarea{
+    background:#071427; border:1px solid rgba(255,255,255,0.04); padding:12px; border-radius:10px; color:var(--text);
+    font-size:14px; resize:vertical;
+  }
+  input:focus, textarea:focus{
+    outline:none; box-shadow:0 0 10px rgba(139,92,246,0.12); border-color:rgba(139,92,246,0.35);
+  }
+  .btn-form{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding:12px 16px; border-radius:12px; border:none; cursor:pointer; font-weight:700;
+    background:linear-gradient(90deg,var(--accent1),var(--accent2)); color:#fff;
+    transition:transform .12s ease, filter .12s ease;
+  }
+  .btn-form:hover{ transform:translateY(-3px); filter:brightness(1.06); }
+  .note{ color:var(--muted); font-size:13px; margin-top:8px; }
+
+  .illustration{ width:100%; height:100%; display:flex; align-items:center; justify-content:center; padding:12px; border-radius:10px; }
+  .illustration svg{ width:100%; height:auto; display:block; border-radius:8px; }
+
+  .site-footer{ margin-top:28px; padding:18px 0; text-align:center; color:var(--muted); border-top:1px solid rgba(255,255,255,0.03); }
+</style>
+</head>
+<body>
+
+  <!-- ✅ New Navbar -->
+  <header class="navbar">
+    <a href="{{ url_for('index_page') }}" class="logo">🔒 <span>CryptexQ</span></a>
+    <nav class="menu">
+      <a href="{{ url_for('home_page') }}">🏠 Home</a>
+      <div class="dropdown">
+        <a href="{{ url_for('talkroom_page') }}">💬 Chat ▾</a>
+        <div class="dropdown-content">
+          <a href="{{ url_for('talkroom_page') }}">Talkroom</a>
+          <a href="securingmessage.html"><i class="fas fa-shield-alt"></i> Securing Messages</a>
+          <a href="{{ url_for('demo_page') }}">Demo</a>
+        </div>
+      </div>
+      <a href="{{ url_for('team_page') }}">👥 Team</a>
+      <a href="{{ url_for('faq_page') }}">❓ FAQ</a>
+      <div class="dropdown">
+        <a href="#">📄 Legal ▾</a>
+        <div class="dropdown-content">
+          <a href="{{ url_for('terms_page') }}">Terms</a>
+          <a href="{{ url_for('about_page') }}">About</a>
+        </div>
+      </div>
+      <a href="{{ url_for('contact_page') }}" class="active">✉️ Contact</a>
+    </nav>
+    <div class="actions">
+      <a href="{{ url_for('login_route') }}" class="btn btn-login">🔑 Login</a>
+      <a href="{{ url_for('signup_route') }}" class="btn btn-signup">👤 Sign Up</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card" aria-labelledby="contact-title">
+      <div class="split">
+        <div>
+          <h1 id="contact-title">Contact CryptexQ</h1>
+          <p>
+            Have a question about the CryptexQ demo, QKD simulation, or want to collaborate?
+            Send us a message — we’ll respond to academic or collaboration requests.
+          </p>
+
+          <form id="contactForm" class="contact-form" autocomplete="on" novalidate>
+            <div class="field">
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" placeholder="Your full name" required>
+            </div>
+
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="you@university.edu" required>
+            </div>
+
+            <div class="field">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="5" placeholder="How can we help?" required></textarea>
+            </div>
+
+            <div style="display:flex;gap:12px;align-items:center;margin-top:6px;">
+              <button type="submit" class="btn-form">Send Message</button>
+              <div class="note" id="contactResult" aria-live="polite"></div>
+            </div>
+          </form>
+
+          <p class="note" style="margin-top:14px;">
+            For security-sensitive enquiries, include a GPG public key or ask for our secure contact channel.
+          </p>
+        </div>
+
+        <div>
+          <div class="illustration" role="img" aria-label="Quantum lock illustration">
+            <!-- SVG remains unchanged -->
+            <svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+              <defs>
+                <linearGradient id="gradA" x1="0" x2="1">
+                  <stop offset="0" stop-color="#8b5cf6"/>
+                  <stop offset="1" stop-color="#06b6d4"/>
+                </linearGradient>
+                <filter id="blur" x="-50%" y="-50%" width="200%" height="200%">
+                  <feGaussianBlur stdDeviation="8" result="b"/>
+                  <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+                </filter>
+              </defs>
+              <rect width="100%" height="100%" fill="none"/>
+              <g transform="translate(60,60)">
+                <circle cx="360" cy="200" r="150" fill="none" stroke="url(#gradA)" stroke-width="6" opacity="0.12" filter="url(#blur)"/>
+                <rect x="280" y="220" rx="18" ry="18" width="160" height="120" fill="#081428" stroke="url(#gradA)" stroke-width="3"/>
+                <path d="M300 220 C300 170 420 170 420 220" fill="none" stroke="#bcdcff" stroke-width="10" stroke-linecap="round" />
+                <circle cx="360" cy="270" r="16" fill="#071026"/>
+                <circle cx="360" cy="270" r="6" fill="#8b5cf6"/>
+                <g opacity="0.9" fill="#9fb0d0">
+                  <circle cx="120" cy="110" r="3"/>
+                  <circle cx="540" cy="120" r="2.2"/>
+                  <circle cx="420" cy="30" r="2.4"/>
+                </g>
+                <path d="M40 260 Q170 80 300 260" stroke="#8b5cf6" stroke-width="2" fill="none" opacity="0.15"/>
+                <path d="M320 260 Q470 90 620 260" stroke="#06b6d4" stroke-width="2" fill="none" opacity="0.12"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <small>© 2025 CryptexQ</small>
+    </div>
+  </footer>
+
+<script>
+  document.getElementById('contactForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const message = document.getElementById('message').value.trim();
+    if(!name || !email || !message) {
+      document.getElementById('contactResult').textContent = 'Please complete all fields.';
+      return;
+    }
+    document.getElementById('contactResult').textContent = '✅ Thank you — message queued (demo).';
+    e.target.reset();
+    setTimeout(()=> document.getElementById('contactResult').textContent = '', 6000);
+  });
+</script>
+</body>
+</html>

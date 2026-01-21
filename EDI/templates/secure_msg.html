@@ -1,0 +1,692 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CryptexQ — Share & Retrieve Secure Message</title>
+  <style>
+    :root{
+      --bg-dark: #030617;
+      --bg-deep: #071026;
+      --panel:#0b1224;
+      --panel-2:#081428;
+      --muted:#9fb0d0;
+      --text:#e7eef9;
+      --accent1:#8b5cf6;
+      --accent2:#06b6d4;
+      --accent-pink:#ec4899;
+      --glass: rgba(255,255,255,0.03);
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg,var(--bg-dark),var(--bg-deep) 40%);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+    }
+
+    /* Header */
+/* Navbar */
+  .navbar {
+    background: #0f1724;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 2rem;
+    border-bottom: 2px solid rgba(138, 43, 226, 0.3);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .navbar .logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #c084fc;
+    text-decoration: none;
+  }
+  .navbar .logo span {
+    background: linear-gradient(90deg,#c084fc,#60a5fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-left: 0.4rem;
+  }
+  .navbar .menu {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .navbar .menu a {
+    text-decoration: none;
+    color: #e5e7eb;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+  .navbar .menu a:hover,
+  .navbar .menu .active {
+    color: #60a5fa;
+  }
+
+  /* Dropdowns */
+  .dropdown { position: relative; }
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 2.5rem;
+    left: 0;
+    background: #1a2238;
+    border-radius: 0.5rem;
+    min-width: 150px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    z-index: 10;
+  }
+  .dropdown-content a {
+    display: block;
+    padding: 0.6rem 1rem;
+    color: #e5e7eb;
+    text-decoration: none;
+  }
+  .dropdown-content a:hover {
+    background: #2c3654;
+    color: #60a5fa;
+  }
+  .dropdown:hover .dropdown-content { display: block; }
+
+  /* Buttons */
+  .navbar .actions {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .btn {
+    padding: 0.5rem 1rem;
+    border-radius: 0.6rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.3s ease;
+  }
+  .btn-login {
+    background: #1e293b;
+    color: #fbbf24;
+  }
+  .btn-login:hover { background: #334155; }
+  .btn-signup {
+    background: linear-gradient(90deg,#8b5cf6,#3b82f6);
+    color: #fff;
+  }
+  .btn-signup:hover { opacity: 0.9; }
+    /* container */
+    .container{ max-width:1200px; margin:34px auto; padding:0 40px; }
+
+    /* Panels */
+    .card {
+      position: relative;
+      border-radius: 18px;
+      padding: 28px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+      overflow: visible;
+      margin-bottom: 28px;
+      display:block;
+    }
+    .card .inner{
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(11,16,32,0.6), rgba(7,12,24,0.6));
+      padding: 28px;
+      border: 1px solid rgba(255,255,255,0.02);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+    }
+
+    h1{ font-size:32px; color:var(--accent1); margin:0 0 12px 0; }
+    h2{ color:var(--accent1); font-size:18px; margin:0 0 12px 0; }
+    p{ color: #cfe6ff; margin:0 0 14px 0; }
+    small, .muted{ color:var(--muted); font-size:13px }
+
+    /* Inputs */
+    input, textarea, select {
+      width:100%;
+      padding:14px 16px;
+      border-radius:12px;
+      background: var(--panel-2);
+      border: 1px solid rgba(255,255,255,0.03);
+      color:var(--text);
+      font-size:14px;
+      box-shadow: inset 0 2px 8px rgba(2,6,23,0.6);
+      margin-bottom: 12px;
+    }
+    input::placeholder, textarea::placeholder { color: rgba(231,238,249,0.25); }
+    textarea { min-height:120px; resize:vertical; }
+
+    /* Buttons */
+    .btn-gradient{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      padding:10px 18px;
+      border-radius:18px;
+      border:none;
+      cursor:pointer;
+      font-weight:700;
+      color:#fff;
+      background: linear-gradient(90deg, var(--accent-pink), var(--accent1), var(--accent2));
+      box-shadow: 0 8px 24px rgba(139,92,246,0.12);
+      transition: transform .14s ease, filter .12s ease;
+      margin-bottom: 12px;
+    }
+    .btn-gradient:hover{ transform: translateY(-3px); filter:brightness(1.06); }
+
+    /* Pre blocks */
+    pre{ 
+      background: rgba(255,255,255,0.02); 
+      color: rgba(219,234,254,0.95); 
+      padding:12px; 
+      border-radius:10px; 
+      overflow:auto; 
+      min-height: 60px;
+      margin-bottom: 12px;
+    }
+
+    /* Layout helpers */
+    .row{ display:flex; gap:12px; align-items:center; }
+    .row > *{ flex:1; }
+    .two-col{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+
+    /* Status messages */
+    .status {
+      padding: 10px 14px;
+      border-radius: 10px;
+      margin: 10px 0;
+      font-size: 14px;
+      display: none;
+    }
+    .status.success {
+      background: rgba(6, 182, 212, 0.1);
+      color: #06b6d4;
+      border: 1px solid rgba(6, 182, 212, 0.2);
+      display: block;
+    }
+    .status.error {
+      background: rgba(236, 72, 153, 0.1);
+      color: #ec4899;
+      border: 1px solid rgba(236, 72, 153, 0.2);
+      display: block;
+    }
+
+    /* Footer */
+    .site-footer{ margin-top:28px; padding:18px 0; text-align:center; color:var(--muted); border-top:1px solid rgba(255,255,255,0.03); }
+
+    @media (max-width:520px){
+      .site-header .container{ padding:12px 18px; }
+      .container{ padding:0 16px; }
+      .card{ padding:18px; }
+      .card .inner{ padding:18px; }
+      .two-col{ grid-template-columns:1fr; }
+      .row{ flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <a href="{{ url_for('index_page') }}" class="logo">🔒 <span>CryptexQ</span></a>
+    <nav class="menu">
+      <a href="{{ url_for('home_page') }}">🏠 Home</a>
+      <div class="dropdown">
+        <a href="{{ url_for('talkroom_page') }}">💬 Chat ▾</a>
+        <div class="dropdown-content">
+          <a href="{{ url_for('talkroom_page') }}">Talkroom</a>
+          <a href="securingmessage.html"><i class="fas fa-shield-alt"></i> Securing Messages</a>
+          <a href="{{ url_for('demo_page') }}">Demo</a>
+        </div>
+      </div>
+      <a href="{{ url_for('team_page') }}">👥 Team</a>
+      <a href="{{ url_for('faq_page') }}">❓ FAQ</a>
+      <div class="dropdown">
+        <a href="#">📄 Legal ▾</a>
+        <div class="dropdown-content">
+          <a href="{{ url_for('terms_page') }}">Terms</a>
+          <a href="{{ url_for('about_page') }}" class="active">About</a>
+        </div>
+      </div>
+      <a href="{{ url_for('contact_page') }}">✉️ Contact</a>
+    </nav>
+    <div class="actions">
+      <a href="{{ url_for('login_route') }}" class="btn btn-login">🔑 Login</a>
+      <a href="{{ url_for('signup_route') }}" class="btn btn-signup">👤 Sign Up</a>
+    </div>
+  </header>
+  <main class="container">
+    <h1>Share & Retrieve Secure Message</h1>
+    <p class="muted">Server: <span id="server-url">http://localhost:3000</span></p>
+
+    <!-- Step A -->
+    <section class="card"><div class="inner">
+      <h2>Step A — Create account & keypair</h2>
+      <label>Username</label>
+      <input id="username" placeholder="alice or bob" />
+      <div class="row">
+        <button class="btn-gradient" id="btn-gen">Generate RSA Keypair & Save</button>
+        <button class="btn-gradient" id="btn-import">Import Private Key</button>
+      </div>
+      <div id="key-status" class="status"></div>
+      <p><small class="muted">Private key is stored in browser for demo. Use secure storage in production.</small></p>
+    </div></section>
+
+    <!-- Step B -->
+    <section class="card"><div class="inner">
+      <h2>Step B — Produce symmetric AES key</h2>
+      <div class="two-col">
+        <div>
+          <label>QKD Photon Count</label>
+          <input id="photon-count" type="number" min="8" max="256" value="32" />
+          <div class="row">
+            <button class="btn-gradient" id="btn-run-qkd">Run QKD</button>
+            <button class="btn-gradient" id="btn-clear-qkd">Clear</button>
+          </div>
+        </div>
+        <div>
+          <label>Or generate random AES key</label>
+          <div class="row">
+            <button class="btn-gradient" id="btn-generate-aes">Generate AES</button>
+            <select id="aes-length">
+              <option value="128">AES-128</option>
+              <option value="256">AES-256</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div id="qkd-status" class="status"></div>
+      <label>Current Symmetric Key (hex preview)</label>
+      <pre id="symmetric-preview">No key generated yet</pre>
+    </div></section>
+
+    <!-- Step C -->
+    <section class="card"><div class="inner">
+      <h2>Step C — Encrypt & Upload</h2>
+      <label>From</label>
+      <input id="from-user" placeholder="alice" />
+      <label>To</label>
+      <input id="to-user" placeholder="bob" />
+      <label>Message</label>
+      <textarea id="plaintext" rows="4">Hello! This is a secure message.</textarea>
+      <div class="row">
+        <button class="btn-gradient" id="btn-encrypt-upload">Encrypt & Upload</button>
+        <button class="btn-gradient" id="btn-encrypt-download">Encrypt & Download</button>
+      </div>
+      <div id="encrypt-status" class="status"></div>
+      <label>Shareable Message ID</label>
+      <input id="share-id" readonly />
+      <label>Upload Log</label>
+      <pre id="upload-log"></pre>
+    </div></section>
+
+    <!-- Step D -->
+    <section class="card"><div class="inner">
+      <h2>Step D — Fetch & Decrypt</h2>
+      <label>Message ID</label>
+      <input id="fetch-id" placeholder="Paste message ID" />
+      <div class="row">
+        <button class="btn-gradient" id="btn-fetch">Fetch & Decrypt</button>
+        <button class="btn-gradient" id="btn-fetch-preview">Fetch Preview</button>
+      </div>
+      <div id="fetch-status" class="status"></div>
+      <label>Decrypted Output</label>
+      <pre id="decrypted-output">No message yet</pre>
+    </div></section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <small>© 2025 CryptexQ — Demo only, not production ready</small>
+    </div>
+  </footer>
+
+  <script>
+    // Global state
+    let currentUser = null;
+    let currentAesKey = null;
+    let currentRsaKeys = { privateKey: null, publicKey: null };
+    let messageStore = new Map(); // Simulated server storage
+
+    // DOM Elements
+    const statusElements = {
+      key: document.getElementById('key-status'),
+      qkd: document.getElementById('qkd-status'),
+      encrypt: document.getElementById('encrypt-status'),
+      fetch: document.getElementById('fetch-status')
+    };
+
+    // Utility functions
+    function showStatus(element, message, isError = false) {
+      element.textContent = message;
+      element.className = isError ? 'status error' : 'status success';
+      setTimeout(() => {
+        element.className = 'status';
+      }, 5000);
+    }
+
+    function arrayBufferToBase64(buffer) {
+      const bytes = new Uint8Array(buffer);
+      let binary = '';
+      for (let i = 0; i < bytes.byteLength; i++) {
+        binary += String.fromCharCode(bytes[i]);
+      }
+      return btoa(binary);
+    }
+
+    function base64ToArrayBuffer(base64) {
+      const binary = atob(base64);
+      const bytes = new Uint8Array(binary.length);
+      for (let i = 0; i < binary.length; i++) {
+        bytes[i] = binary.charCodeAt(i);
+      }
+      return bytes.buffer;
+    }
+
+    function arrayBufferToHex(buffer) {
+      return Array.from(new Uint8Array(buffer))
+        .map(b => b.toString(16).padStart(2, '0'))
+        .join('');
+    }
+
+    function hexToArrayBuffer(hex) {
+      const bytes = new Uint8Array(hex.length / 2);
+      for (let i = 0; i < hex.length; i += 2) {
+        bytes[i/2] = parseInt(hex.substr(i, 2), 16);
+      }
+      return bytes.buffer;
+    }
+
+    // Generate RSA key pair
+    async function generateRSAKeyPair() {
+      try {
+        const keyPair = await crypto.subtle.generateKey(
+          {
+            name: "RSA-OAEP",
+            modulusLength: 2048,
+            publicExponent: new Uint8Array([1, 0, 1]),
+            hash: "SHA-256",
+          },
+          true,
+          ["encrypt", "decrypt"]
+        );
+        
+        currentRsaKeys.privateKey = keyPair.privateKey;
+        currentRsaKeys.publicKey = keyPair.publicKey;
+        
+        return keyPair;
+      } catch (error) {
+        console.error("Key generation error:", error);
+        throw error;
+      }
+    }
+
+    // Generate AES key
+    async function generateAESKey(length = 256) {
+      try {
+        const key = await crypto.subtle.generateKey(
+          {
+            name: "AES-GCM",
+            length: length,
+          },
+          true,
+          ["encrypt", "decrypt"]
+        );
+        
+        currentAesKey = key;
+        const exportedKey = await crypto.subtle.exportKey("raw", key);
+        document.getElementById('symmetric-preview').textContent = arrayBufferToHex(exportedKey);
+        
+        return key;
+      } catch (error) {
+        console.error("AES key generation error:", error);
+        throw error;
+      }
+    }
+
+    // Encrypt message with AES
+    async function encryptMessage(message, key) {
+      try {
+        const encoder = new TextEncoder();
+        const encodedMessage = encoder.encode(message);
+        
+        const iv = crypto.getRandomValues(new Uint8Array(12));
+        
+        const encryptedContent = await crypto.subtle.encrypt(
+          {
+            name: "AES-GCM",
+            iv: iv
+          },
+          key,
+          encodedMessage
+        );
+        
+        const combined = new Uint8Array(iv.length + encryptedContent.byteLength);
+        combined.set(iv, 0);
+        combined.set(new Uint8Array(encryptedContent), iv.length);
+        
+        return arrayBufferToBase64(combined);
+      } catch (error) {
+        console.error("Encryption error:", error);
+        throw error;
+      }
+    }
+
+    // Decrypt message with AES
+    async function decryptMessage(encryptedData, key) {
+      try {
+        const encryptedArray = base64ToArrayBuffer(encryptedData);
+        const iv = encryptedArray.slice(0, 12);
+        const data = encryptedArray.slice(12);
+        
+        const decryptedContent = await crypto.subtle.decrypt(
+          {
+            name: "AES-GCM",
+            iv: iv
+          },
+          key,
+          data
+        );
+        
+        const decoder = new TextDecoder();
+        return decoder.decode(decryptedContent);
+      } catch (error) {
+        console.error("Decryption error:", error);
+        throw error;
+      }
+    }
+
+    // Simulate QKD process
+    function simulateQKD(photonCount) {
+      return new Promise((resolve) => {
+        showStatus(statusElements.qkd, "Running quantum key distribution simulation...");
+        
+        setTimeout(() => {
+          const keyBytes = new Uint8Array(photonCount / 8);
+          crypto.getRandomValues(keyBytes);
+          
+          setTimeout(async () => {
+            const key = await crypto.subtle.importKey(
+              "raw",
+              keyBytes,
+              { name: "AES-GCM" },
+              true,
+              ["encrypt", "decrypt"]
+            );
+            
+            currentAesKey = key;
+            document.getElementById('symmetric-preview').textContent = arrayBufferToHex(keyBytes);
+            showStatus(statusElements.qkd, `QKD completed! Generated ${photonCount}-bit key.`);
+            resolve(key);
+          }, 1000);
+        }, 1500);
+      });
+    }
+
+    // Event listeners
+    document.getElementById('btn-gen').addEventListener('click', async () => {
+      const username = document.getElementById('username').value.trim();
+      if (!username) {
+        showStatus(statusElements.key, "Please enter a username first", true);
+        return;
+      }
+      
+      try {
+        currentUser = username;
+        await generateRSAKeyPair();
+        showStatus(statusElements.key, `RSA keypair generated for ${username}`);
+      } catch (error) {
+        showStatus(statusElements.key, "Key generation failed: " + error.message, true);
+      }
+    });
+
+    document.getElementById('btn-import').addEventListener('click', () => {
+      showStatus(statusElements.key, "Import functionality would be implemented here");
+    });
+
+    document.getElementById('btn-run-qkd').addEventListener('click', async () => {
+      const photonCount = parseInt(document.getElementById('photon-count').value);
+      if (photonCount < 8 || photonCount > 256) {
+        showStatus(statusElements.qkd, "Photon count must be between 8 and 256", true);
+        return;
+      }
+      
+      try {
+        await simulateQKD(photonCount);
+      } catch (error) {
+        showStatus(statusElements.qkd, "QKD simulation failed: " + error.message, true);
+      }
+    });
+
+    document.getElementById('btn-clear-qkd').addEventListener('click', () => {
+      currentAesKey = null;
+      document.getElementById('symmetric-preview').textContent = "No key generated yet";
+      document.getElementById('photon-count').value = "32";
+      showStatus(statusElements.qkd, "QKD key cleared");
+    });
+
+    document.getElementById('btn-generate-aes').addEventListener('click', async () => {
+      const length = parseInt(document.getElementById('aes-length').value);
+      
+      try {
+        await generateAESKey(length);
+        showStatus(statusElements.qkd, `AES-${length} key generated successfully`);
+      } catch (error) {
+        showStatus(statusElements.qkd, "AES key generation failed: " + error.message, true);
+      }
+    });
+
+    document.getElementById('btn-encrypt-upload').addEventListener('click', async () => {
+      const fromUser = document.getElementById('from-user').value.trim();
+      const toUser = document.getElementById('to-user').value.trim();
+      const message = document.getElementById('plaintext').value;
+      
+      if (!fromUser || !toUser || !message) {
+        showStatus(statusElements.encrypt, "Please fill in all fields", true);
+        return;
+      }
+      
+      if (!currentAesKey) {
+        showStatus(statusElements.encrypt, "Please generate an encryption key first", true);
+        return;
+      }
+      
+      try {
+        // Encrypt the message
+        const encryptedMessage = await encryptMessage(message, currentAesKey);
+        
+        // Generate a message ID
+        const messageId = arrayBufferToHex(crypto.getRandomValues(new Uint8Array(8)));
+        
+        // Store the message (simulated server)
+        messageStore.set(messageId, {
+          from: fromUser,
+          to: toUser,
+          message: encryptedMessage,
+          timestamp: new Date().toISOString()
+        });
+        
+        // Update UI
+        document.getElementById('share-id').value = messageId;
+        document.getElementById('upload-log').textContent = `Message encrypted and stored with ID: ${messageId}`;
+        showStatus(statusElements.encrypt, "Message encrypted and uploaded successfully");
+      } catch (error) {
+        showStatus(statusElements.encrypt, "Encryption failed: " + error.message, true);
+      }
+    });
+
+    document.getElementById('btn-encrypt-download').addEventListener('click', async () => {
+      showStatus(statusElements.encrypt, "Download functionality would be implemented here");
+    });
+
+    document.getElementById('btn-fetch').addEventListener('click', async () => {
+      const messageId = document.getElementById('fetch-id').value.trim();
+      
+      if (!messageId) {
+        showStatus(statusElements.fetch, "Please enter a message ID", true);
+        return;
+      }
+      
+      if (!currentAesKey) {
+        showStatus(statusElements.fetch, "No decryption key available", true);
+        return;
+      }
+      
+      try {
+        // Retrieve the message (simulated server)
+        const messageData = messageStore.get(messageId);
+        
+        if (!messageData) {
+          showStatus(statusElements.fetch, "Message not found", true);
+          return;
+        }
+        
+        // Decrypt the message
+        const decryptedMessage = await decryptMessage(messageData.message, currentAesKey);
+        
+        // Update UI
+        document.getElementById('decrypted-output').textContent = decryptedMessage;
+        showStatus(statusElements.fetch, "Message decrypted successfully");
+      } catch (error) {
+        showStatus(statusElements.fetch, "Decryption failed: " + error.message, true);
+      }
+    });
+
+    document.getElementById('btn-fetch-preview').addEventListener('click', () => {
+      const messageId = document.getElementById('fetch-id').value.trim();
+      
+      if (!messageId) {
+        showStatus(statusElements.fetch, "Please enter a message ID", true);
+        return;
+      }
+      
+      const messageData = messageStore.get(messageId);
+      
+      if (!messageData) {
+        showStatus(statusElements.fetch, "Message not found", true);
+        return;
+      }
+      
+      document.getElementById('decrypted-output').textContent = `From: ${messageData.from}\nTo: ${messageData.to}\nTime: ${messageData.timestamp}\n\n[Encrypted content - requires key to decrypt]`;
+      showStatus(statusElements.fetch, "Message preview loaded");
+    });
+
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', () => {
+      // Set current user from input if available
+      const usernameInput = document.getElementById('username');
+      if (usernameInput.value) {
+        currentUser = usernameInput.value;
+      }
+      
+      // Add event listener to update current user
+      usernameInput.addEventListener('change', () => {
+        currentUser = usernameInput.value.trim();
+      });
+    });
+  </script>
+</body>
+</html>

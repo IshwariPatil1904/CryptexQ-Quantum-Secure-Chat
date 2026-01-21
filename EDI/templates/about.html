@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CryptexQ — About</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: #071026;
+      color: #d1d5db;
+      line-height: 1.6;
+    }
+
+    /* Navbar */
+    .navbar {
+      background: #0f1724;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.8rem 2rem;
+      border-bottom: 2px solid rgba(138, 43, 226, 0.3);
+    }
+    .navbar .logo {
+      display: flex;
+      align-items: center;
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #c084fc;
+      text-decoration: none;
+    }
+    .navbar .logo span {
+      background: linear-gradient(90deg,#c084fc,#60a5fa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-left: 0.4rem;
+    }
+    .navbar .menu {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .navbar .menu a {
+      text-decoration: none;
+      color: #e5e7eb;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+    .navbar .menu a:hover,
+    .navbar .menu .active {
+      color: #60a5fa;
+    }
+
+    /* Dropdowns */
+    .dropdown {
+      position: relative;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 2.5rem;
+      left: 0;
+      background: #1a2238;
+      border-radius: 0.5rem;
+      min-width: 150px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      z-index: 10;
+    }
+    .dropdown-content a {
+      display: block;
+      padding: 0.6rem 1rem;
+      color: #e5e7eb;
+      text-decoration: none;
+    }
+    .dropdown-content a:hover {
+      background: #2c3654;
+      color: #60a5fa;
+    }
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    /* Buttons */
+    .navbar .actions {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .btn {
+      padding: 0.5rem 1rem;
+      border-radius: 0.6rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+    .btn-login {
+      background: #1e293b;
+      color: #fbbf24;
+    }
+    .btn-login:hover {
+      background: #334155;
+    }
+    .btn-signup {
+      background: linear-gradient(90deg,#8b5cf6,#3b82f6);
+      color: #fff;
+    }
+    .btn-signup:hover {
+      opacity: 0.9;
+    }
+
+    /* Page container */
+    .container {
+      max-width: 1200px;
+      margin: 1.5rem auto;
+      padding: 0 1.25rem;
+    }
+
+    .card {
+      background: #0f1724;
+      border-radius: 1rem;
+      padding: 2rem;
+      margin: 2rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      padding: 2px;
+      border-radius: 1rem;
+      background: linear-gradient(120deg,#8b5cf6,#3b82f6,#06b6d4);
+      background-size: 300% 300%;
+      animation: borderGlow 6s linear infinite;
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+              mask-composite: exclude;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+    .illustration {
+      width: 100%;
+      height: auto;
+      border-radius: 1rem;
+      background: linear-gradient(180deg, rgba(139,92,246,0.06), rgba(6,182,212,0.03));
+      padding: 1rem;
+    }
+
+    h1, h2 {
+      color: #a78bfa;
+      margin: 0 0 0.6rem 0;
+    }
+    h1 { font-size: 2rem; }
+    h2 { margin-top: 1.25rem; }
+
+    p { margin-bottom: 0.8rem; color: #cfe6ff; }
+    ul { list-style: none; padding: 0; margin: 0; }
+    ul li {
+      background: rgba(167, 139, 250, 0.06);
+      margin: 0.45rem 0;
+      padding: 0.6rem 0.9rem;
+      border-radius: 0.5rem;
+      color: #c6d8ff;
+    }
+
+    .site-footer {
+      text-align: center;
+      padding: 1rem;
+      background: #0f1724;
+      border-top: 2px solid rgba(138, 43, 226, 0.3);
+      margin-top: 2rem;
+      font-size: 0.95rem;
+      color: #9fb0d0;
+    }
+
+    .fade-in { animation: fadeIn 1s ease-in; }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+    @keyframes borderGlow { 
+      0%{background-position:0% 50%} 
+      50%{background-position:100% 50%} 
+      100%{background-position:0% 50%} 
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ✅ New Navbar -->
+  <header class="navbar">
+    <a href="{{ url_for('index_page') }}" class="logo">🔒 <span>CryptexQ</span></a>
+    <nav class="menu">
+      <a href="{{ url_for('home_page') }}">🏠 Home</a>
+      <div class="dropdown">
+        <a href="{{ url_for('talkroom_page') }}">💬 Chat ▾</a>
+        <div class="dropdown-content">
+        <a href="{{ url_for('talkroom_page') }}">💬 Chat ▾</a>
+          <a href="">Talkroom</a>
+          <a href="securingmessage.html"><i class="fas fa-shield-alt"></i> Securing Messages</a>
+          <a href="{{ url_for('demo_page') }}">Demo</a>
+        </div>
+      </div>
+      <a href="{{ url_for('team_page') }}">👥 Team</a>
+      <a href="{{ url_for('faq_html') }}">❓ FAQ</a>
+      <div class="dropdown">
+        <a href="#">📄 Legal ▾</a>
+        <div class="dropdown-content">
+          <a href="{{ url_for('terms_page') }}">Terms</a>
+          <a href="{{ url_for('about_page') }}" class="active">About</a>
+        </div>
+      </div>
+      <a href="{{ url_for('contact_page') }}">✉️ Contact</a>
+    </nav>
+    <div class="actions">
+      <a href="{{ url_for('login_route') }}" class="btn btn-login">🔑 Login</a>
+      <a href="{{ url_for('signup_route') }}" class="btn btn-signup">👤 Sign Up</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card fade-in">
+      <div class="split">
+        <div>
+          <h1>About CryptexQ</h1>
+          <p>
+            CryptexQ is an academic project that simulates Quantum Key Distribution (QKD) with AES-GCM encryption.
+            It demonstrates how secure communication can be achieved using quantum principles without real quantum hardware.
+          </p>
+
+          <h2>Scope</h2>
+          <ul>
+            <li>Secure text messaging using simulated QKD.</li>
+            <li>Interactive educational experiments for students and enthusiasts.</li>
+            <li>Visualization of qubit generation, basis selection, and measurement.</li>
+            <li>Support for workshops, seminars, and classroom learning.</li>
+            <li>Foundation for future extension to PQC or real QKD hardware integration.</li>
+          </ul>
+
+          <h2>Objectives</h2>
+          <ul>
+            <li>Simulate the BB84 QKD protocol step-by-step.</li>
+            <li>Generate symmetric keys for secure encryption.</li>
+            <li>Encrypt and decrypt messages using AES-GCM.</li>
+            <li>Provide an interactive and educational interface.</li>
+            <li>Bridge theory with hands-on experimentation.</li>
+          </ul>
+        </div>
+
+        <!-- Illustration -->
+        <div class="illustration">
+          <!-- keep your SVG here -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <small>© 2025 CryptexQ</small>
+    </div>
+  </footer>
+
+</body>
+</html>

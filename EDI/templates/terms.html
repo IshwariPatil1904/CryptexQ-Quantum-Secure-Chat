@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CryptexQ — Terms & Conditions</title>
+
+  <style>
+  :root {
+    --bg: #050d1d;
+    --panel: rgba(15,23,42,0.85);
+    --accent1: #ec4899;
+    --accent2: #8b5cf6;
+    --accent3: #00c3ff;
+    --text: #ffffff;
+    --muted: #9fb0d0;
+  }
+
+  * { box-sizing: border-box; margin:0; padding:0; }
+
+  body {
+    font-family: "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ===== Navbar ===== */
+  header {
+    background: #0b1222;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .brand {
+    font-size: 1.6rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: var(--text);
+  }
+  .brand span {
+    background: linear-gradient(90deg, var(--accent1), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 22px;
+  }
+
+  nav ul li {
+    position: relative;
+  }
+
+  nav a {
+    text-decoration: none;
+    color: var(--text);
+    font-weight: 500;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: 0.3s;
+    cursor: pointer;
+  }
+
+  nav a:hover { color: var(--accent3); }
+
+  /* Dropdown */
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 35px;
+    left: 0;
+    background: var(--panel);
+    padding: 12px 0;
+    border-radius: 10px;
+    min-width: 180px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+  }
+  .dropdown-menu a {
+    display: block;
+    padding: 8px 15px;
+    font-size: 0.9rem;
+  }
+  .dropdown-menu a:hover { background: rgba(255,255,255,0.05); }
+
+  .dropdown.open .dropdown-menu {
+    display: block;
+  }
+
+  /* Buttons */
+  .login-btn {
+    background: rgba(255,255,255,0.05);
+    padding: 8px 16px;
+    border-radius: 10px;
+  }
+  .signup-btn {
+    background: linear-gradient(90deg, var(--accent2), var(--accent3));
+    padding: 8px 18px;
+    border-radius: 10px;
+    font-weight: 600;
+  }
+
+  /* ===== Hero Section ===== */
+  .hero {
+    position: relative;
+    height: 40vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    background: var(--bg);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .hero h1 { 
+    font-size: 2.5rem; 
+    color: var(--text); 
+    font-weight: bold; 
+  }
+
+  /* ===== Glass Panel ===== */
+  section { padding: 60px 20px; max-width: 1000px; margin: auto; }
+  .panel {
+    background: var(--panel);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.5);
+    border: 1px solid rgba(0,195,255,0.3);
+  }
+
+  section h2 { 
+    color: var(--accent3); 
+    text-align: center; 
+    margin-bottom: 25px; 
+    font-size: 2rem; 
+  }
+  section p {
+    color: var(--text);
+    margin-bottom: 15px;
+    font-size: 1rem;
+  }
+
+  /* ===== Footer ===== */
+  footer { 
+    background: var(--panel); 
+    padding: 20px; 
+    color: var(--muted); 
+    text-align: center; 
+    margin-top:40px; 
+  }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="{{ url_for('index_page') }}" class="brand">🔒 <span>CryptexQ</span></a>
+  <nav>
+    <ul>
+      <li><a href="{{ url_for('home_page') }}">🏠 Home</a></li>
+      
+      <li class="dropdown">
+        <a onclick="toggleDropdown(event)">💬 Chat ▾</a>
+        <div class="dropdown-menu">
+          <a href="{{ url_for('talkroom_page') }}">🏛 Talk Rooms</a>
+          <a href="{{ url_for('demo_page') }}">▶️ Demo</a>
+        </div>
+      </li>
+      
+      <li><a href="{{ url_for('teams_page') }}">👥 Team</a></li>
+      <li><a href="faq.html">❓ FAQ</a></li>
+      
+      <li class="dropdown">
+        <a onclick="toggleDropdown(event)">📑 Legal ▾</a>
+        <div class="dropdown-menu">
+          <a href="{{ url_for('terms_page') }}">📜 Terms</a>
+          <a href="privacy.html">🔏 Privacy</a>
+        </div>
+      </li>
+      
+      <li><a href="index.html#contact">✉️ Contact</a></li>
+      <li><a href="{{ url_for('login_route') }}" class="login-btn">🔑 Login</a></li>
+      <li><a href="{{ url_for('signup_route') }}" class="signup-btn">👤 Sign Up</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <h1>📜 Terms & Conditions</h1>
+</section>
+
+<section>
+  <div class="panel">
+    <h2>Terms & Conditions of CryptexQ</h2>
+    <p>By using CryptexQ, you agree to the following rules and responsibilities. CryptexQ provides quantum-safe messaging, ensuring end-to-end encryption using quantum key distribution (QKD) and modern cryptography.</p>
+    <p>1. Users must provide accurate account information and keep credentials secure.<br>
+       2. Messages are encrypted; users are responsible for the content.<br>
+       3. Unauthorized access or misuse is strictly prohibited.<br>
+       4. CryptexQ may collect minimal usage data to improve services.<br>
+       5. No guarantee against message loss due to external factors.<br>
+       6. Quantum keys must remain private.<br>
+       7. Accounts violating terms may be suspended.<br>
+       8. Intellectual property belongs to CryptexQ.<br>
+       9. Cryptography is for educational and practical experimentation.<br>
+       10. Continued use indicates acceptance of these terms and updates.
+    </p>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 CryptexQ Project — Secure Quantum Messaging</p>
+</footer>
+
+<script>
+function toggleDropdown(event) {
+  event.preventDefault();
+  const parent = event.target.closest(".dropdown");
+  parent.classList.toggle("open");
+
+  // Close others
+  document.querySelectorAll(".dropdown").forEach(d => {
+    if (d !== parent) d.classList.remove("open");
+  });
+}
+
+// Close dropdowns if clicked outside
+document.addEventListener("click", (e) => {
+  if (!e.target.closest(".dropdown")) {
+    document.querySelectorAll(".dropdown").forEach(d => d.classList.remove("open"));
+  }
+});
+</script>
+
+</body>
+</html>

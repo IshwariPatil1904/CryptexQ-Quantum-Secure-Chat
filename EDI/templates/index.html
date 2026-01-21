@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CryptexQ — Quantum-Safe Messaging</title>
+  <style>
+    :root {
+      --bg: #071026;
+      --panel: #0f172a;
+      --accent: #00c3ff;
+      --text: #ffffff;
+      --muted: #9fb0d0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Arial", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+  /* Navbar */
+  .navbar {
+    background: #0f1724;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 2rem;
+    border-bottom: 2px solid rgba(138, 43, 226, 0.3);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .navbar .logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #c084fc;
+    text-decoration: none;
+  }
+  .navbar .logo span {
+    background: linear-gradient(90deg,#c084fc,#60a5fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-left: 0.4rem;
+  }
+  .navbar .menu {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .navbar .menu a {
+    text-decoration: none;
+    color: #e5e7eb;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+  .navbar .menu a:hover,
+  .navbar .menu .active {
+    color: #60a5fa;
+  }
+
+  /* Dropdowns */
+  .dropdown { position: relative; }
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 2.5rem;
+    left: 0;
+    background: #1a2238;
+    border-radius: 0.5rem;
+    min-width: 150px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    z-index: 10;
+  }
+  .dropdown-content a {
+    display: block;
+    padding: 0.6rem 1rem;
+    color: #e5e7eb;
+    text-decoration: none;
+  }
+  .dropdown-content a:hover {
+    background: #2c3654;
+    color: #60a5fa;
+  }
+  .dropdown.show .dropdown-content { display: block; }
+
+  /* Buttons */
+  .navbar .actions {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .btn {
+    padding: 0.5rem 1rem;
+    border-radius: 0.6rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.3s ease;
+  }
+  .btn-login {
+    background: #1e293b;
+    color: #fbbf24;
+  }
+  .btn-login:hover { background: #334155; }
+  .btn-signup {
+    background: linear-gradient(90deg,#8b5cf6,#3b82f6);
+    color: #fff;
+  }
+  .btn-signup:hover { opacity: 0.9; }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+      overflow: hidden;
+      background: var(--bg);
+    }
+
+    .hero canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
+
+    .hero-content { position: relative; z-index: 1; max-width: 800px; }
+
+    .hero h2 { font-size: 3rem; color: var(--accent); margin-bottom: 20px; }
+    .hero p { font-size: 1.1rem; color: var(--muted); max-width: 750px; margin: auto; }
+
+    /* Buttons */
+    .cta-buttons {
+      margin-top: 25px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .btn, .btn-secondary {
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .btn { background: var(--accent); color: var(--bg); border: 2px solid var(--accent); }
+    .btn:hover { background: transparent; color: var(--accent); }
+    .btn-secondary { background: transparent; color: var(--accent); border: 2px solid var(--accent); }
+    .btn-secondary:hover { background: var(--accent); color: var(--bg); }
+
+    /* Sections */
+    section { padding: 80px 20px; }
+    h2 { color: var(--accent); text-align: center; margin-bottom: 25px; font-size: 2rem; }
+
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 40px; text-align: center; }
+    .step img { width: 100px; margin-bottom: 15px; }
+
+    .why ul { list-style: none; max-width: 700px; margin: 20px auto 0; padding: 0; }
+    .why li { position: relative; padding-left: 25px; margin-bottom: 12px; }
+    .why li::before { content: "🔒"; position: absolute; left: 0; }
+
+    .how-to { background: var(--panel); }
+    .how-to p { max-width: 800px; margin: auto; text-align: center; color: var(--muted); }
+
+    footer { background: var(--panel); padding: 20px; color: var(--muted); text-align: center; margin-top: 40px; }
+  </style>
+</head>
+<body>
+
+<header class="navbar">
+    <a href="{{ url_for('index_page') }}" class="logo">🔒 <span>CryptexQ</span></a>
+    <nav class="menu">
+      <a href="{{ url_for('home_page') }}">🏠 Home</a>
+      <div class="dropdown">
+        <a href="{{ url_for('index_page') }}" onclick="toggleDropdown(event)">💬 Chat ▾</a>
+        <div class="dropdown-content">
+          <a href="{{ url_for('talkroom_page') }}">Talkroom</a>
+          <a href="{{ url_for('demo_page') }}">Demo</a>
+        </div>
+      </div>
+      <a href="{{ url_for('team_page') }}">👥 Team</a>
+      <a href="{{ url_for('faq_page') }}">❓ FAQ</a>
+      <div class="dropdown">
+        <a href="#">📄 Legal ▾</a>
+        <div class="dropdown-content">
+          <a href="{{ url_for('terms_page') }}">Terms</a>
+          <a href="{{ url_for('about_page') }}" class="active">About</a>
+        </div>
+      </div>
+      <a href="{{ url_for('contact_page') }}">✉ Contact</a>
+    </nav>
+    <div class="actions">
+      <a href="{{ url_for('login_route') }}" class="btn btn-login">🔑 Login</a>
+<a href="{{ url_for('signup_route') }}" class="btn btn-signup">👤 Sign Up</a>
+
+    </div>
+  </header>
+
+<!-- Hero Section -->
+<section id="home" class="hero">
+  <canvas id="heroCanvas"></canvas>
+  <div class="hero-content">
+    <h2>Quantum-Safe Messaging for the Future</h2>
+    <p>
+      Protecting communication with Quantum Key Distribution and next-gen encryption.  
+      CryptexQ ensures your private messages stay safe from hackers.  
+      Even future quantum computers cannot break our protection.
+    </p>
+    <div class="cta-buttons">
+      <a href="{{ url_for('demo_page') }}" class="btn">🔐 Try Demo</a>
+      <a href="#how-it-works" class="btn-secondary">ℹ️ Learn More</a>
+    </div>
+  </div>
+</section>
+
+<!-- How it Works -->
+<section id="how-it-works">
+  <h2>🔎 How CryptexQ Works</h2>
+  <p style="text-align:center; max-width:800px; margin:auto;">
+    CryptexQ integrates quantum cryptography and classical cybersecurity to ensure that your messages remain unbreakable even against future quantum computers.  
+    Quantum bits are generated randomly using QKD protocols.  
+    Messages are encrypted with one-time pad techniques.  
+    Keys are exchanged securely with no interception risk.  
+    Transmission is fast, secure, and tamper-proof.  
+    Only the recipient with the correct key can decrypt messages.  
+    Protection includes defense against man-in-the-middle attacks.  
+    The system is designed for research, education, and real-world use.  
+    Easy-to-use interface for secure messaging.  
+    Future-proof security for all private communications.
+  </p>
+  <div class="steps">
+    <div class="step">
+      <img src="https://cdn-icons-png.flaticon.com/512/2910/2910768.png" alt="Key generation">
+      <h3>Key Generation</h3>
+      <p>Quantum bits are generated using QKD protocols ensuring randomness and security.</p>
+    </div>
+    <div class="step">
+      <img src="https://cdn-icons-png.flaticon.com/512/942/942748.png" alt="Encryption">
+      <h3>Encryption</h3>
+      <p>Your message is encrypted using one-time pad techniques combined with quantum-safe keys.</p>
+    </div>
+    <div class="step">
+      <img src="https://cdn-icons-png.flaticon.com/512/3310/3310328.png" alt="Secure transmission">
+      <h3>Secure Transmission</h3>
+      <p>Messages travel securely across the network with no chance of eavesdropping.</p>
+    </div>
+    <div class="step">
+      <img src="https://cdn-icons-png.flaticon.com/512/3208/3208676.png" alt="Decryption">
+      <h3>Decryption</h3>
+      <p>The recipient uses the shared quantum key to safely unlock the original message.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Why CryptexQ -->
+<section id="why" class="why">
+  <h2>🚀 Why CryptexQ?</h2>
+  <p style="text-align:center; max-width:800px; margin:auto;">
+    Traditional encryption like RSA and AES may be broken by future quantum computers.  
+    CryptexQ solves this by combining <strong>BB84 quantum key distribution</strong> with <strong>post-quantum cryptography</strong>, 
+    ensuring your data is <strong>future-proof</strong>.
+  </p>
+  <ul>
+    <li>✔ Quantum Key Distribution (QKD)</li>
+    <li>✔ End-to-End Encrypted Messages</li>
+    <li>✔ Protection from Man-in-the-Middle Attacks</li>
+    <li>✔ Educational Demo + Real-World Application</li>
+  </ul>
+</section>
+
+<!-- How to Use -->
+<section id="how-to" class="how-to">
+  <h2>📘 How to Use CryptexQ</h2>
+  <p>Getting started with CryptexQ is simple. Just follow these steps:</p>
+  <div class="steps">
+    <div class="step">
+      <img src="https://cdn-icons-png.flaticon.com/512/3039/3039436.png" alt="Create account">
+      <h3>Step 1: Create Account</h3>
+      <p>Register with a username and generate your personal quantum key pair.</p>
+    </div>
+    <div class="step">
+      <img src="https://cdn-icons-png.flaticon.com/512/4201/4201973.png" alt="Share key">
+      <h3>Step 2: Share Key</h3>
+      <p>Exchange your quantum key with your contact securely using QKD protocols.</p>
+    </div>
+    <div class="step">
+      <img src="https://cdn-icons-png.flaticon.com/512/3064/3064197.png" alt="Send message">
+      <h3>Step 3: Send Encrypted Message</h3>
+      <p>Type your message, encrypt it using the shared key, and send it instantly.</p>
+    </div>
+    <div class="step">
+      <img src="https://cdn-icons-png.flaticon.com/512/2541/2541988.png" alt="Decrypt message">
+      <h3>Step 4: Decrypt Message</h3>
+      <p>The recipient uses the same key to safely decrypt and read the original message.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Footer / Contact -->
+<footer id="contact">
+  <p>© 2025 CryptexQ Project — Built for Secure Communication</p>
+</footer>
+
+<script>
+function toggleMenu() {
+  document.getElementById("nav-links").classList.toggle("active");
+}
+
+// Dropdown toggle for Chat
+function toggleDropdown(event) {
+  event.preventDefault(); // stop immediate redirect
+  const parent = event.target.parentElement;
+  parent.classList.toggle("show");
+}
+
+// Hero Section Animation
+const canvas = document.getElementById('heroCanvas');
+const ctx = canvas.getContext('2d');
+let width = canvas.width = window.innerWidth;
+let height = canvas.height = window.innerHeight;
+
+class Node {
+  constructor() {
+    this.x = Math.random()*width;
+    this.y = Math.random()*height;
+    this.vx = (Math.random()-0.5)*0.5;
+    this.vy = (Math.random()-0.5)*0.5;
+    this.radius = Math.random()*2+1;
+  }
+  move() {
+    this.x += this.vx;
+    this.y += this.vy;
+    if(this.x<0||this.x>width) this.vx*=-1;
+    if(this.y<0||this.y>height) this.vy*=-1;
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);
+    ctx.fillStyle="rgba(0,195,255,0.7)";
+    ctx.fill();
+  }
+}
+
+const nodes = [];
+const numNodes = 100;
+for(let i=0;i<numNodes;i++) nodes.push(new Node());
+
+function animate() {
+  ctx.clearRect(0,0,width,height);
+  for(let i=0;i<numNodes;i++){
+    nodes[i].move();
+    nodes[i].draw();
+    for(let j=i+1;j<numNodes;j++){
+      const dx = nodes[i].x-nodes[j].x;
+      const dy = nodes[i].y-nodes[j].y;
+      const dist = Math.sqrt(dx*dx+dy*dy);
+      if(dist<120){
+        ctx.beginPath();
+        ctx.moveTo(nodes[i].x,nodes[i].y);
+        ctx.lineTo(nodes[j].x,nodes[j].y);
+        ctx.strokeStyle="rgba(0,195,255,"+(1-dist/120)*0.3+")";
+        ctx.lineWidth=1;
+        ctx.stroke();
+      }
+    }
+  }
+  requestAnimationFrame(animate);
+}
+animate();
+
+window.addEventListener('resize',()=>{
+  width = canvas.width = window.innerWidth;
+  height = canvas.height = window.innerHeight;
+});
+</script>
+</body>
+</html>

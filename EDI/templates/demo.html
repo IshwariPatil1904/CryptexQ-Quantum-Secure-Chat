@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptexQ - Encryption Demo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #0f172a;
+            --accent: #22d3ee;
+            --light: #f8fafc;
+            --gray: #94a3b8;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: var(--light);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+      display: flex;
+      justify-content: center; /* ✅ Centering navbar */
+      align-items: center;
+      background: #0d0f1a;
+      padding: 12px 40px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      gap: 40px;
+    }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        .logo-icon {
+            color: var(--accent);
+            font-size: 28px;
+        }
+        
+        
+    /* === NAVBAR FROM IMAGE === */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #0d0f1a;
+      padding: 12px 40px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .brand {
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand span {
+      background: linear-gradient(to right, #ec4899, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
+
+    nav ul li {
+      position: relative;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    /* Dropdown */
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #161a2a;
+      border-radius: 8px;
+      min-width: 160px;
+      padding: 10px 0;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+      z-index: 100;
+    }
+
+    .dropdown-menu a {
+      padding: 10px 15px;
+      display: block;
+      color: #fff;
+    }
+
+    .dropdown-menu a:hover {
+      background: #1d2235;
+      color: var(--accent);
+    }
+
+    .dropdown:hover .dropdown-menu {
+      display: block;
+    }
+
+    /* Login & Signup */
+    .login-btn {
+      background: #1d2235;
+      padding: 8px 16px;
+      border-radius: 10px;
+    }
+
+    .signup-btn {
+      background: linear-gradient(135deg, #8b5cf6, #3b82f6);
+      padding: 8px 16px;
+      border-radius: 10px;
+      color: #fff !important;
+      font-weight: 600;
+    }
+        .hero {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-success {
+            background: var(--success);
+        }
+        
+        .btn-success:hover {
+            background: #0da271;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+        }
+        
+        .demo-container {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .key-exchange {
+            flex: 1;
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .key-exchange h2 {
+            margin-bottom: 10px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.3);
+        }
+        
+        .key-box {
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .key-value {
+            font-family: monospace;
+            word-break: break-all;
+            margin: 10px 0;
+            color: var(--accent);
+        }
+        
+        .chat-window {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 15px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+        
+        .chat-header {
+            padding: 20px;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .chat-header-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--warning);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        
+        .chat-header-info {
+            flex: 1;
+        }
+        
+        .chat-header-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .chat-header-status {
+            font-size: 0.9rem;
+            color: var(--success);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-height: 400px;
+        }
+        
+        .message {
+            max-width: 70%;
+            padding: 12px 18px;
+            border-radius: 18px;
+            position: relative;
+            line-height: 1.5;
+        }
+        
+        .message.received {
+            background: rgba(148, 163, 184, 0.2);
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .message.sent {
+            background: var(--primary);
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .message-encrypted {
+            font-family: monospace;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 5px;
+            padding: 5px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+        
+        .message-time {
+            font-size: 0.7rem;
+            color: var(--gray);
+            text-align: right;
+            margin-top: 5px;
+        }
+        
+        .message-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 5px;
+        }
+        
+        .chat-input {
+            padding: 20px;
+            display: flex;
+            gap: 15px;
+            border-top: 1px solid rgba(148, 163, 184, 0.3);
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 15px 20px;
+            border-radius: 50px;
+            border: none;
+            background: rgba(15, 23, 42, 0.5);
+            color: white;
+            font-size: 1rem;
+        }
+        
+        .chat-input input:focus {
+            outline: 2px solid var(--primary);
+        }
+        
+        .encryption-status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            background: rgba(16, 185, 129, 0.1);
+            border-top: 1px solid rgba(148, 163, 184, 0.3);
+        }
+        
+        .encryption-status i {
+            color: var(--success);
+            margin-right: 10px;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .feature-card {
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+        
+        .feature-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .feature-desc {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: var(--gray);
+            border-top: 1px solid rgba(148, 163, 184, 0.3);
+            margin-top: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .demo-container {
+                flex-direction: column;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            nav ul {
+                gap: 15px;
+            }
+        }
+        
+        .process-explanation {
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+        
+        .process-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            position: relative;
+        }
+        
+        .process-step {
+            text-align: center;
+            flex: 1;
+            position: relative;
+            padding: 0 15px;
+        }
+        
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-weight: bold;
+        }
+        
+        .process-steps::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20%;
+            right: 20%;
+            height: 2px;
+            background: var(--primary);
+            z-index: 1;
+        }
+        
+        .process-step::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            right: -50%;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
+            z-index: 1;
+        }
+        
+        .process-step:last-child::after {
+            display: none;
+        }
+        
+        .step-content {
+            position: relative;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+   <header>
+      <a href="{{ url_for('index_page') }}" class="brand">🔒 <span>CryptexQ</span></a>
+      <nav>
+        <ul>
+          <li><a href="{{ url_for('home_page') }}">🏠 Home</a></li>
+          
+          <li class="dropdown">
+            <a href="#">💬 Chat ▾</a>
+            <div class="dropdown-menu">
+              <a href="{{ url_for('talkroom_page') }}">🏛 Talk Room</a>
+              <a href="{{ url_for('demo_page') }}">▶️ Demo</a>
+            </div>
+          </li>
+          
+          <li><a href="{{ url_for('team_page') }}">👥 Team</a></li>
+          <li><a href="{{ url_for('faq_page') }}">❓ FAQ</a></li>
+          
+          <li class="dropdown">
+            <a href="#">📑 Legal ▾</a>
+            <div class="dropdown-menu">
+              <a href="{{ url_for('terms_page') }}">📜 Terms</a>
+              <a href="{{ url_for('about_page') }}">ℹ️ About</a>
+              <a href="{{ url_for('contact_page') }}">✉️ Contact</a>
+            </div>
+          </li>
+          
+          <li><a href="{{ url_for('login_route') }}" class="login-btn">🔑 Login</a></li>
+          <li><a href="{{ url_for('signup_route') }}" class="signup-btn">👤 Sign Up</a></li>
+        </ul>
+      </nav>
+    </header>
+        
+        <section class="hero">
+            <h1>End-to-End Encryption Demo</h1>
+            <p>Experience how CryptexQ securely exchanges keys and encrypts messages between users. Generate keys, exchange them, and send encrypted messages.</p>
+        </section>
+        
+        <section class="process-explanation">
+            <h2>How Encryption Works</h2>
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Generate Keys</h3>
+                        <p>Create your public and private key pair</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Exchange Keys</h3>
+                        <p>Share public keys with your contact</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Encrypt Message</h3>
+                        <p>Use their public key to encrypt your message</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Decrypt Message</h3>
+                        <p>They use their private key to decrypt it</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="demo-container">
+            <div class="key-exchange">
+                <h2>Key Exchange</h2>
+                
+                <div class="key-box">
+                    <h3>Your Private Key</h3>
+                    <div id="private-key" class="key-value">Not generated yet</div>
+                    <button id="generate-keys" class="btn">Generate Keys</button>
+                </div>
+                
+                <div class="key-box">
+                    <h3>Your Public Key</h3>
+                    <div id="public-key" class="key-value">Not generated yet</div>
+                    <button id="copy-public-key" class="btn btn-outline" disabled>Copy Public Key</button>
+                </div>
+                
+                <div class="key-box">
+                    <h3>Friend's Public Key</h3>
+                    <div id="friend-public-key" class="key-value">Not received yet</div>
+                    <textarea id="friend-key-input" placeholder="Paste your friend's public key here" rows="3" disabled></textarea>
+                    <button id="add-friend-key" class="btn btn-outline" disabled>Add Friend's Key</button>
+                </div>
+                
+                <div class="key-box">
+                    <h3>Session Status</h3>
+                    <div id="session-status">Not established</div>
+                    <button id="establish-session" class="btn btn-success" disabled>Establish Secure Session</button>
+                </div>
+            </div>
+            
+            <div class="chat-window">
+                <div class="chat-header">
+                    <div class="chat-header-avatar">JS</div>
+                    <div class="chat-header-info">
+                        <div class="chat-header-name">John Smith</div>
+                        <div class="chat-header-status">
+                            <i class="fas fa-circle" id="encryption-indicator"></i>
+                            <span id="encryption-status-text">Not encrypted</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline">
+                        <i class="fas fa-phone"></i>
+                    </button>
+                </div>
+                
+                <div class="chat-messages" id="chat-messages">
+                    <div class="message received">
+                        <div class="message-text">Welcome to CryptexQ! Generate keys and establish a secure session to start encrypted messaging.</div>
+                        <div class="message-time">10:24 AM</div>
+                    </div>
+                </div>
+                
+                <div class="chat-input">
+                    <input type="text" id="message-input" placeholder="Type your message..." disabled>
+                    <button id="send-button" class="btn" disabled>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+                
+                <div class="encryption-status">
+                    <i class="fas fa-shield-alt"></i>
+                    <span id="security-status">Secure session not established. Messages are not encrypted.</span>
+                </div>
+            </div>
+        </section>
+        
+        <!-- <section class="features">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h3 class="feature-title">End-to-End Encryption</h3>
+                <p class="feature-desc">Your messages are encrypted on your device and only decrypted on the recipient's device. Not even we can read them.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-key"></i>
+                </div>
+                <h3 class="feature-title">Public Key Cryptography</h3>
+                <p class="feature-desc">Exchange public keys to establish secure communication channels without sharing private keys.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <h3 class="feature-title">Identity Verification</h3>
+                <p class="feature-desc">Verify your contacts' identities to prevent man-in-the-middle attacks.</p>
+            </div>
+        </section> -->
+        
+        <footer>
+            <p>&copy; 2025 CryptexQ Secure Messaging. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Simple encryption simulation for demo purposes
+        class CryptoSim {
+            static generateKey() {
+                const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                let key = '';
+                for (let i = 0; i < 16; i++) {
+                    key += chars.charAt(Math.floor(Math.random() * chars.length));
+                }
+                return key;
+            }
+            
+            static encrypt(message, key) {
+                // This is a simple Caesar cipher for demonstration only
+                // Not suitable for real encryption
+                let result = '';
+                for (let i = 0; i < message.length; i++) {
+                    let charCode = message.charCodeAt(i);
+                    // Simple transformation using the key
+                    const keyChar = key.charCodeAt(i % key.length);
+                    charCode = charCode ^ (keyChar % 32);
+                    result += String.fromCharCode(charCode);
+                }
+                return btoa(result); // Base64 encode to make it look encrypted
+            }
+            
+            static decrypt(encryptedMessage, key) {
+                // Reverse the simple Caesar cipher
+                try {
+                    const decoded = atob(encryptedMessage);
+                    let result = '';
+                    for (let i = 0; i < decoded.length; i++) {
+                        let charCode = decoded.charCodeAt(i);
+                        const keyChar = key.charCodeAt(i % key.length);
+                        charCode = charCode ^ (keyChar % 32);
+                        result += String.fromCharCode(charCode);
+                    }
+                    return result;
+                } catch (e) {
+                    return "[Decryption Error]";
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM elements
+            const generateKeysBtn = document.getElementById('generate-keys');
+            const copyPublicKeyBtn = document.getElementById('copy-public-key');
+            const addFriendKeyBtn = document.getElementById('add-friend-key');
+            const establishSessionBtn = document.getElementById('establish-session');
+            const sendButton = document.getElementById('send-button');
+            const messageInput = document.getElementById('message-input');
+            const chatMessages = document.getElementById('chat-messages');
+            
+            // State variables
+            let privateKey = null;
+            let publicKey = null;
+            let friendPublicKey = null;
+            let sessionKey = null;
+            let sessionEstablished = false;
+            
+            // Generate keys
+            generateKeysBtn.addEventListener('click', function() {
+                privateKey = CryptoSim.generateKey();
+                publicKey = CryptoSim.generateKey();
+                
+                document.getElementById('private-key').textContent = privateKey;
+                document.getElementById('public-key').textContent = publicKey;
+                
+                // Enable next steps
+                copyPublicKeyBtn.disabled = false;
+                document.getElementById('friend-key-input').disabled = false;
+                addFriendKeyBtn.disabled = false;
+                
+                addMessage('system', 'Keys generated successfully. Copy your public key and share it with your friend.');
+            });
+            
+            // Copy public key
+            copyPublicKeyBtn.addEventListener('click', function() {
+                navigator.clipboard.writeText(publicKey).then(() => {
+                    addMessage('system', 'Public key copied to clipboard. Send it to your friend.');
+                });
+            });
+            
+            // Add friend's public key
+            addFriendKeyBtn.addEventListener('click', function() {
+                const friendKeyInput = document.getElementById('friend-key-input');
+                friendPublicKey = friendKeyInput.value.trim();
+                
+                if (friendPublicKey.length < 5) {
+                    addMessage('system', 'Please enter a valid public key.');
+                    return;
+                }
+                
+                document.getElementById('friend-public-key').textContent = friendPublicKey;
+                establishSessionBtn.disabled = false;
+                
+                addMessage('system', "Friend's public key added. Click 'Establish Secure Session' to begin encrypted messaging.");
+            });
+            
+            // Establish secure session
+            establishSessionBtn.addEventListener('click', function() {
+                // In a real application, this would involve a key exchange protocol
+                // For this demo, we'll just generate a session key
+                sessionKey = CryptoSim.generateKey();
+                sessionEstablished = true;
+                
+                document.getElementById('session-status').textContent = 'Secure session established';
+                document.getElementById('encryption-indicator').style.color = 'var(--success)';
+                document.getElementById('encryption-status-text').textContent = 'End-to-end encrypted';
+                document.getElementById('security-status').textContent = 'Secure session established. Messages are end-to-end encrypted.';
+                
+                messageInput.disabled = false;
+                sendButton.disabled = false;
+                
+                addMessage('system', 'Secure session established! You can now send encrypted messages.');
+                addMessage('received', 'Hey, secure connection is ready! Send me an encrypted message.', true);
+            });
+            
+            // Send message
+            sendButton.addEventListener('click', sendMessage);
+            messageInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+            
+            function sendMessage() {
+                const message = messageInput.value.trim();
+                if (!message || !sessionEstablished) return;
+                
+                // Encrypt the message
+                const encryptedMessage = CryptoSim.encrypt(message, sessionKey);
+                
+                // Display the encrypted message
+                addMessage('sent', message, true, encryptedMessage);
+                
+                // Clear input
+                messageInput.value = '';
+                
+                // Simulate response after a delay
+                setTimeout(() => {
+                    const responses = [
+                        "Thanks for your secure message!",
+                        "I got your encrypted message and decrypted it successfully.",
+                        "This encryption is working great!",
+                        "Your message was received securely."
+                    ];
+                    const response = responses[Math.floor(Math.random() * responses.length)];
+                    const encryptedResponse = CryptoSim.encrypt(response, sessionKey);
+                    addMessage('received', response, true, encryptedResponse);
+                }, 2000);
+            }
+            
+            function addMessage(sender, text, encrypted = false, encryptedText = null) {
+                const messageElement = document.createElement('div');
+                messageElement.classList.add('message');
+                messageElement.classList.add(sender === 'sent' ? 'sent' : 'received');
+                
+                const now = new Date();
+                const timeString = now.getHours() + ':' + String(now.getMinutes()).padStart(2, '0');
+                
+                let messageHTML = `
+                    <div class="message-text">${text}</div>
+                `;
+                
+                if (encrypted && encryptedText) {
+                    messageHTML += `
+                        <div class="message-encrypted">Encrypted: ${encryptedText}</div>
+                        <div class="message-controls">
+                            <button class="btn btn-outline decrypt-btn" style="font-size: 0.7rem; padding: 3px 8px;">
+                                <i class="fas fa-unlock"></i> Decrypt
+                            </button>
+                        </div>
+                    `;
+                }
+                
+                messageHTML += `<div class="message-time">${timeString}</div>`;
+                
+                messageElement.innerHTML = messageHTML;
+                chatMessages.appendChild(messageElement);
+                
+                // Scroll to bottom
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                
+                // Add decrypt button functionality
+                if (encrypted) {
+                    const decryptBtn = messageElement.querySelector('.decrypt-btn');
+                    if (decryptBtn) {
+                        decryptBtn.addEventListener('click', function() {
+                            const encryptedMsg = encryptedText;
+                            const decrypted = CryptoSim.decrypt(encryptedMsg, sessionKey);
+                            alert(`Decrypted message: ${decrypted}`);
+                        });
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

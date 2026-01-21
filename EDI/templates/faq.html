@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CryptexQ — FAQ</title>
+
+  <style>
+  :root {
+    --bg: #071026;
+    --panel: rgba(15,23,42,0.85);
+    --accent: #00c3ff;
+    --accent2: #8b5cf6;
+    --text: #ffffff;
+    --muted: #9fb0d0;
+  }
+
+  * { box-sizing: border-box; margin:0; padding:0; }
+
+  body {
+    font-family: "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    scroll-behavior: smooth;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* Header / Navbar */
+    header {
+      display: flex;
+      justify-content: center; /* ✅ Centering navbar */
+      align-items: center;
+      background: #0d0f1a;
+      padding: 12px 40px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      gap: 40px;
+    }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        .logo-icon {
+            color: var(--accent);
+            font-size: 28px;
+        }
+        
+        
+    /* === NAVBAR FROM IMAGE === */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #0d0f1a;
+      padding: 12px 40px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .brand {
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand span {
+      background: linear-gradient(to right, #ec4899, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
+
+    nav ul li {
+      position: relative;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    /* Dropdown */
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #161a2a;
+      border-radius: 8px;
+      min-width: 160px;
+      padding: 10px 0;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+      z-index: 100;
+    }
+
+    .dropdown-menu a {
+      padding: 10px 15px;
+      display: block;
+      color: #fff;
+    }
+
+    .dropdown-menu a:hover {
+      background: #1d2235;
+      color: var(--accent);
+    }
+
+    .dropdown:hover .dropdown-menu {
+      display: block;
+    }
+
+    /* Login & Signup */
+    .login-btn {
+      background: #1d2235;
+      padding: 8px 16px;
+      border-radius: 10px;
+    }
+
+    .signup-btn {
+      background: linear-gradient(135deg, #8b5cf6, #3b82f6);
+      padding: 8px 16px;
+      border-radius: 10px;
+      color: #fff !important;
+      font-weight: 600;
+    }
+
+  /* Hamburger menu */
+  .hamburger { display: none; flex-direction: column; cursor: pointer; gap: 5px; }
+  .hamburger div { width: 25px; height: 3px; background-color: var(--text); transition: 0.3s; }
+
+  @media (max-width: 768px) {
+    nav ul { display: none; position: absolute; top: 60px; right: 30px; background: var(--panel); flex-direction: column; gap: 15px; padding: 15px 20px; border-radius: 8px; z-index: 1001; }
+    nav ul.active { display: flex; }
+    .hamburger { display: flex; }
+  }
+
+  /* Hero Section (no gradient now) */
+  .hero {
+    position: relative;
+    height: 30vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    overflow: hidden;
+    background: var(--panel);  /* removed gradient, using dark panel */
+  }
+  .hero h1 { font-size: 2.5rem; color: var(--text); }
+
+  /* Glass panel content */
+  section { padding: 60px 20px; max-width: 1000px; margin: auto; }
+  .panel {
+    background: var(--panel);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.5);
+    border: 1px solid rgba(0,195,255,0.3);
+  }
+
+  section h2 { color: var(--accent); text-align: center; margin-bottom: 25px; font-size: 2rem; }
+
+  /* FAQ styles */
+  .faq-item { margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+  .faq-question {
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    padding: 15px;
+    font-size: 1rem;
+    color: var(--accent);
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  .faq-question:hover { color: var(--accent2); }
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+    padding: 0 15px;
+    color: var(--text);
+  }
+  .faq-answer.open { max-height: 300px; margin-bottom: 10px; }
+
+  /* Footer */
+  footer { background: var(--panel); padding: 20px; color: var(--muted); text-align: center; margin-top:40px; }
+
+  </style>
+</head>
+<body>
+
+<header>
+      <a href="{{ url_for('index_page') }}" class="brand">🔒 <span>CryptexQ</span></a>
+      <nav>
+        <ul>
+          <li><a href="{{ url_for('home_page') }}">🏠 Home</a></li>
+          
+          <li class="dropdown">
+            <a href="#">💬 Chat ▾</a>
+            <div class="dropdown-menu">
+              <a href="{{ url_for('talkroom_page') }}">🏛 Talk Room</a>
+              <a href="{{ url_for('demo_page') }}">▶️ Demo</a>
+            </div>
+          </li>
+          
+          <li><a href="{{ url_for('team_page') }}">👥 Team</a></li>
+          <li><a href="{{ url_for('faq_page') }}">❓ FAQ</a></li>
+          
+          <li class="dropdown">
+            <a href="#">📑 Legal ▾</a>
+            <div class="dropdown-menu">
+              <a href="{{ url_for('terms_page') }}">📜 Terms</a>
+              <a href="{{ url_for('about_page') }}">ℹ️ About</a>
+              <a href="{{ url_for('contact_page') }}">✉️ Contact</a>
+            </div>
+          </li>
+          
+          <li><a href="{{ url_for('login_route') }}" class="login-btn">🔑 Login</a></li>
+          <li><a href="{{ url_for('signup_route') }}" class="signup-btn">👤 Sign Up</a></li>
+        </ul>
+      </nav>
+    </header>
+<!-- Hero -->
+<section class="hero">
+  <h1>❓ Frequently Asked Questions</h1>
+</section>
+
+<section>
+  <div class="panel">
+    <h2>FAQ — CryptexQ</h2>
+
+    <!-- FAQ items (15 Qs) -->
+    <div class="faq-item"><button class="faq-question">🔒 What is CryptexQ?</button><div class="faq-answer">CryptexQ is a secure quantum-safe messaging platform that combines Quantum Key Distribution (QKD) with AES-GCM encryption to ensure end-to-end privacy.</div></div>
+    <div class="faq-item"><button class="faq-question">⚡ How does QKD work?</button><div class="faq-answer">QKD uses quantum mechanics (such as the BB84 protocol) to securely exchange cryptographic keys. Any attempt to eavesdrop alters the quantum states, alerting the users.</div></div>
+    <div class="faq-item"><button class="faq-question">🛡️ Is CryptexQ unbreakable?</button><div class="faq-answer">While no system is 100% unbreakable, combining QKD with AES-GCM provides strong protection against both classical and quantum computer attacks.</div></div>
+    <div class="faq-item"><button class="faq-question">💻 Do I need special hardware to use CryptexQ?</button><div class="faq-answer">Real-world QKD requires quantum hardware. However, CryptexQ offers a simulation-based demo that works without special devices.</div></div>
+    <div class="faq-item"><button class="faq-question">📱 Can I access CryptexQ on mobile?</button><div class="faq-answer">Yes. CryptexQ’s interface is fully responsive and works on desktops, tablets, and mobile devices.</div></div>
+    <div class="faq-item"><button class="faq-question">🔑 What encryption algorithms are used?</button><div class="faq-answer">CryptexQ primarily uses AES-256-GCM for message encryption and integrates keys exchanged securely using Quantum Key Distribution.</div></div>
+    <div class="faq-item"><button class="faq-question">🌐 Is an internet connection required?</button><div class="faq-answer">Yes. CryptexQ requires an active connection for sending messages and exchanging keys, though local simulations may work offline.</div></div>
+    <div class="faq-item"><button class="faq-question">👥 Who can use CryptexQ?</button><div class="faq-answer">CryptexQ is designed for researchers, students, cybersecurity enthusiasts, and organizations interested in quantum-safe communication.</div></div>
+    <div class="faq-item"><button class="faq-question">🕵️ Can someone eavesdrop on my messages?</button><div class="faq-answer">With QKD, any attempt to eavesdrop is detectable. Messages are also encrypted with AES-GCM, making unauthorized access extremely difficult.</div></div>
+    <div class="faq-item"><button class="faq-question">📚 What protocols are implemented?</button><div class="faq-answer">CryptexQ supports the BB84 quantum key distribution protocol and uses standard AES-GCM for secure message encryption and authentication.</div></div>
+    <div class="faq-item"><button class="faq-question">🚀 Is CryptexQ faster than normal messaging apps?</button><div class="faq-answer">Quantum key generation can be slower than traditional methods, but once established, AES-GCM ensures fast and efficient message encryption/decryption.</div></div>
+    <div class="faq-item"><button class="faq-question">🔧 Is CryptexQ open-source?</button><div class="faq-answer">CryptexQ is primarily a research project. Depending on licensing, parts of the code may be made available for academic and learning purposes.</div></div>
+    <div class="faq-item"><button class="faq-question">🌍 Can CryptexQ be scaled for global use?</button><div class="faq-answer">Yes. With the right quantum infrastructure and relay nodes, CryptexQ can scale to support secure communication on a large scale.</div></div>
+    <div class="faq-item"><button class="faq-question">🔮 Why is quantum safety important?</button><div class="faq-answer">Quantum computers will be able to break classical encryption methods in the future. CryptexQ provides a future-proof approach to secure messaging.</div></div>
+    <div class="faq-item"><button class="faq-question">🧑‍💻 How can I try the demo?</button><div class="faq-answer">You can explore the demo on our website under the "Demo" section. It simulates QKD and secure messaging without the need for specialized hardware.</div></div>
+
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 CryptexQ Project — Secure Quantum Messaging</p>
+</footer>
+
+<script>
+function toggleMenu() {
+  document.getElementById("nav-links").classList.toggle("active");
+}
+
+// FAQ toggle logic
+document.querySelectorAll('.faq-question').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const answer = btn.nextElementSibling;
+    answer.classList.toggle('open');
+  });
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CryptexQ — Team</title>
+
+<!-- AOS CSS -->
+<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+<style>
+:root{
+  --bg-dark: #030617;
+  --bg-deep: #071026;
+  --panel:#0b1224;
+  --panel-2:#081428;
+  --muted:#9fb0d0;
+  --text:#e7eef9;
+  --accent1:#8b5cf6;
+  --accent2:#06b6d4;
+  --accent-pink:#ec4899;
+  --glass: rgba(255,255,255,0.03);
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: linear-gradient(180deg,var(--bg-dark),var(--bg-deep) 40%);
+  color: var(--text);
+  line-height:1.6;
+}
+/* Navbar */
+  .navbar {
+    background: #0f1724;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 2rem;
+    border-bottom: 2px solid rgba(138, 43, 226, 0.3);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .navbar .logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #c084fc;
+    text-decoration: none;
+  }
+  .navbar .logo span {
+    background: linear-gradient(90deg,#c084fc,#60a5fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-left: 0.4rem;
+  }
+  .navbar .menu {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .navbar .menu a {
+    text-decoration: none;
+    color: #e5e7eb;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+  .navbar .menu a:hover,
+  .navbar .menu .active {
+    color: #60a5fa;
+  }
+
+  /* Dropdowns */
+  .dropdown { position: relative; }
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 2.5rem;
+    left: 0;
+    background: #1a2238;
+    border-radius: 0.5rem;
+    min-width: 150px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    z-index: 10;
+  }
+  .dropdown-content a {
+    display: block;
+    padding: 0.6rem 1rem;
+    color: #e5e7eb;
+    text-decoration: none;
+  }
+  .dropdown-content a:hover {
+    background: #2c3654;
+    color: #60a5fa;
+  }
+  .dropdown:hover .dropdown-content { display: block; }
+
+  /* Buttons */
+  .navbar .actions {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .btn {
+    padding: 0.5rem 1rem;
+    border-radius: 0.6rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.3s ease;
+  }
+  .btn-login {
+    background: #1e293b;
+    color: #fbbf24;
+  }
+  .btn-login:hover { background: #334155; }
+  .btn-signup {
+    background: linear-gradient(90deg,#8b5cf6,#3b82f6);
+    color: #fff;
+  }
+  .btn-signup:hover { opacity: 0.9; }
+
+main{
+  max-width: 1000px;
+  margin: 60px auto;
+  padding: 0 20px;
+}
+
+h1{ font-size:2.5rem; color: var(--accent1); margin-bottom: 20px; text-align:center; }
+h2{ font-size:1.5rem; color: var(--accent2); margin-top: 24px; margin-bottom: 12px; }
+p, li{ margin-bottom: 12px; color: var(--text); }
+ul{ list-style-type: disc; padding-left: 24px; }
+
+.card{
+  background: var(--panel-2);
+  border-radius: 16px;
+  padding: 28px;
+  margin-bottom: 28px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  backdrop-filter: blur(6px);
+}
+
+.card ul li{
+  margin-bottom: 10px;
+}
+
+/* Buttons (if needed) */
+.btn-gradient{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  padding: 12px 24px;
+  border-radius:30px;
+  border:none;
+  cursor:pointer;
+  font-weight:700;
+  color:#fff;
+  background: linear-gradient(90deg, var(--accent-pink), var(--accent1), var(--accent2));
+  box-shadow: 0 8px 24px rgba(139,92,246,0.12);
+  transition: transform .14s ease, filter .12s ease;
+}
+.btn-gradient:hover{ transform: translateY(-2px); filter: brightness(1.06); }
+
+footer{
+  background: #111827;
+  text-align:center;
+  padding: 20px;
+  color: var(--muted);
+  border-top:1px solid #1f2937;
+  font-size:0.9rem;
+}
+
+/* Responsive */
+@media(max-width:900px){
+  header{ padding: 16px 20px; }
+  main{ padding:0 16px; }
+}
+</style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Navbar -->
+    <header class="navbar">
+      <a href="{{ url_for('index_page') }}" class="logo">🔒 <span>CryptexQ</span></a>
+      <nav class="menu">
+        <a href="{{ url_for('home_page') }}">🏠 Home</a>
+        <div class="dropdown">
+          <a href="{{ url_for('talkroom_page') }}">💬 Chat ▾</a>
+          <div class="dropdown-content">
+            <a href="{{ url_for('talkroom_page') }}">Talkroom</a>
+            <a href="securingmessage.html"><i class="fas fa-shield-alt"></i> Securing Messages</a>
+            <a href="{{ url_for('demo_page') }}">Demo</a>
+          </div>
+        </div>
+        <a href="{{ url_for('team_page') }}">👥 Team</a>
+        <a href="{{ url_for('faq_page') }}">❓ FAQ</a>
+        <div class="dropdown">
+          <a href="#">📄 Legal ▾</a>
+          <div class="dropdown-content">
+            <a href="{{ url_for('terms_page') }}">Terms</a>
+            <a href="{{ url_for('about_page') }}" class="active">About</a>
+          </div>
+        </div>
+        <a href="{{ url_for('contact_page') }}">✉ Contact</a>
+      </nav>
+      <div class="actions">
+        <a href="{{ url_for('login_route') }}" class="btn btn-login">🔑 Login</a>
+        <a href="{{ url_for('signup_route') }}" class="btn btn-signup">👤 Sign Up</a>
+      </div>
+    </header>
+
+    
+<main>
+  <section class="card" data-aos="fade-up">
+    <h1>Project Team</h1>
+    <h2>Group 18</h2>
+    <ul>
+      <li>Ishwari Ajaykumar Patil — 12411124</li>
+      <li>Prajakta Subhash Patil — 12410718</li>
+      <li>Anuja Sampat Pawar — 12411046</li>
+      <li>Dhanashree Thansing Pawar — 12410976</li>
+    </ul>
+
+    <h2>Guide</h2>
+    <p>Prof. Piyush Gawali — <a href="mailto:piyush.gawali@viit.ac.in" style="color:var(--accent1);">piyush.gawali@viit.ac.in</a></p>
+  </section>
+</main>
+
+<footer>
+  <small>© 2025 CryptexQ — Group 18, Vishwakarma Institute of Technology</small>
+</footer>
+
+<!-- AOS Script -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({duration:1000, once:true});
+</script>
+
+</body>
+</html>

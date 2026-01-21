@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CryptexQ — Profile</title>
+
+  <style>
+  :root {
+    --bg: #071026;
+    --panel: rgba(15,23,42,0.85);
+    --accent: #00c3ff;
+    --accent2: #8b5cf6;
+    --text: #ffffff;
+    --muted: #9fb0d0;
+  }
+
+  * { box-sizing: border-box; margin:0; padding:0; }
+
+  body {
+    font-family: "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* Navbar */
+/* Navbar */
+  .navbar {
+    background: #0f1724;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 2rem;
+    border-bottom: 2px solid rgba(138, 43, 226, 0.3);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .navbar .logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #c084fc;
+    text-decoration: none;
+  }
+  .navbar .logo span {
+    background: linear-gradient(90deg,#c084fc,#60a5fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-left: 0.4rem;
+  }
+  .navbar .menu {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .navbar .menu a {
+    text-decoration: none;
+    color: #e5e7eb;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+  .navbar .menu a:hover,
+  .navbar .menu .active {
+    color: #60a5fa;
+  }
+
+  /* Dropdowns */
+  .dropdown { position: relative; }
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 2.5rem;
+    left: 0;
+    background: #1a2238;
+    border-radius: 0.5rem;
+    min-width: 150px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    z-index: 10;
+  }
+  .dropdown-content a {
+    display: block;
+    padding: 0.6rem 1rem;
+    color: #e5e7eb;
+    text-decoration: none;
+  }
+  .dropdown-content a:hover {
+    background: #2c3654;
+    color: #60a5fa;
+  }
+  .dropdown:hover .dropdown-content { display: block; }
+
+  /* Buttons */
+  .navbar .actions {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .btn {
+    padding: 0.5rem 1rem;
+    border-radius: 0.6rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.3s ease;
+  }
+  .btn-login {
+    background: #1e293b;
+    color: #fbbf24;
+  }
+  .btn-login:hover { background: #334155; }
+  .btn-signup {
+    background: linear-gradient(90deg,#8b5cf6,#3b82f6);
+    color: #fff;
+  }
+  .btn-signup:hover { opacity: 0.9; }  header {
+    background: var(--panel);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  header h1, header a.brand { font-size: 1.7rem; color: var(--accent); text-decoration: none; }
+  nav ul { list-style: none; display: flex; gap: 20px; }
+  nav a { text-decoration: none; color: var(--text); font-weight: bold; transition: color 0.3s; }
+  nav a:hover, nav a.active { color: var(--accent); }
+  .hamburger { display: none; flex-direction: column; cursor: pointer; gap: 5px; }
+  .hamburger div { width: 25px; height: 3px; background-color: var(--text); transition: 0.3s; }
+  @media (max-width: 768px) {
+    nav ul { display: none; position: absolute; top: 60px; right: 30px; background: var(--panel); flex-direction: column; gap: 15px; padding: 15px 20px; border-radius: 8px; z-index: 1001; }
+    nav ul.active { display: flex; }
+    .hamburger { display: flex; }
+  }
+
+  /* Hero */
+  .hero {
+    height: 25vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--panel);
+  }
+  .hero h1 { font-size: 2.5rem; color: var(--accent); }
+
+  /* Profile Panel */
+  section { padding: 60px 20px; max-width: 900px; margin: auto; }
+  .panel {
+    background: var(--panel);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.5);
+    border: 1px solid rgba(0,195,255,0.3);
+  }
+
+  /* Avatar Circle */
+  .avatar-wrapper {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    border: 3px dashed var(--accent);
+    margin: 0 auto 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: rgba(255,255,255,0.05);
+    cursor: pointer;
+    position: relative;
+  }
+
+  .avatar-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none; /* hidden until uploaded */
+  }
+
+  .avatar-text {
+    color: var(--muted);
+    font-size: 0.9rem;
+    text-align: center;
+    padding: 10px;
+  }
+
+  .upload-btn { display:block; margin:10px auto 30px; color: var(--accent); cursor: pointer; text-align: center; }
+  .upload-btn input { display:none; }
+
+  .panel h2 { color: var(--accent); margin-bottom: 20px; text-align: center; }
+
+  form { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .form-group { text-align: left; }
+  .form-group.full { grid-column: span 2; }
+  label { display: block; margin-bottom: 8px; color: var(--muted); }
+  input, select, textarea {
+    width: 100%; padding: 12px; border-radius: 8px; border: none; outline: none;
+    background: rgba(255,255,255,0.08); color: var(--text); font-size: 1rem;
+  }
+  textarea { resize: none; height: 100px; }
+
+  /* Dropdown Styling */
+  select {
+    appearance: none;
+    cursor: pointer;
+  }
+  select option {
+    background: #ffffff;  /* white dropdown */
+    color: #000000;       /* black text */
+    font-size: 1rem;
+  }
+
+  button {
+    grid-column: span 2;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    margin-top: 10px;
+  }
+  button:hover { transform: scale(1.05); }
+
+  .logout {
+    grid-column: span 2;
+    text-align: center;
+    margin-top: 20px;
+    display: block;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: bold;
+  }
+  .logout:hover { text-decoration: underline; }
+
+  footer { background: var(--panel); padding: 20px; color: var(--muted); text-align: center; margin-top:40px; }
+  </style>
+</head>
+<body>
+
+<header class="navbar">
+    <a href="{{ url_for('index_page') }}" class="logo">🔒 <span>CryptexQ</span></a>
+    <nav class="menu">
+      <a href="{{ url_for('home_page') }}">🏠 Home</a>
+      <div class="dropdown">
+        <a href="{{ url_for('talkroom_page') }}">💬 Chat ▾</a>
+        <div class="dropdown-content">
+          <a href="{{ url_for('talkroom_page') }}">Talkroom</a>
+          <a href="securingmessage.html"><i class="fas fa-shield-alt"></i> Securing Messages</a>
+          <a href="{{ url_for('demo_page') }}">Demo</a>
+        </div>
+      </div>
+      <a href="{{ url_for('team_page') }}">👥 Team</a>
+      <a href="{{ url_for('faq_page') }}">❓ FAQ</a>
+      <div class="dropdown">
+        <a href="#">📄 Legal ▾</a>
+        <div class="dropdown-content">
+          <a href="{{ url_for('terms_page') }}">Terms</a>
+          <a href="{{ url_for('about_page') }}" class="active">About</a>
+        </div>
+      </div>
+      <a href="{{ url_for('contact_page') }}">✉ Contact</a>
+    </nav>
+    <div class="actions">
+      <a href="{{ url_for('login_route') }}" class="btn btn-login">🔑 Login</a>
+      <a href="{{ url_for('signup_route') }}" class="btn btn-signup">👤 Sign Up</a>
+    </div>
+  </header>
+
+<!-- Hero -->
+<section class="hero">
+  <h1>👤 My Profile</h1>
+</section>
+
+<!-- Profile Info -->
+<section>
+  <div class="panel">
+    <center>
+      <div class="avatar-wrapper" id="avatarWrapper">
+        <img id="avatarPreview" alt="Profile Picture">
+        <span class="avatar-text" id="avatarText">Upload Photo</span>
+      </div>
+      <label class="upload-btn">📷 Select Profile Picture
+        <input type="file" id="avatarUpload" accept="image/*">
+      </label>
+    </center>
+    <h2>User Information</h2>
+
+    <form>
+      <div class="form-group"><label>Full Name</label><input type="text" placeholder="Enter your full name"></div>
+      <div class="form-group"><label>Username</label><input type="text" placeholder="Choose a username"></div>
+      <div class="form-group"><label>Email</label><input type="email" placeholder="Enter your email"></div>
+      <div class="form-group"><label>Phone</label><input type="text" placeholder="Enter your phone number"></div>
+      <div class="form-group"><label>Date of Birth</label><input type="date"></div>
+      <div class="form-group"><label>Gender</label>
+        <select><option value="">Select</option><option>Male</option><option>Female</option><option>Other</option></select>
+      </div>
+      <div class="form-group full"><label>Address</label><textarea placeholder="Enter your address"></textarea></div>
+      <div class="form-group full"><label>About Me</label><textarea placeholder="Write something about yourself"></textarea></div>
+      <div class="form-group"><label>Security Question</label>
+        <select><option value="">Select a question</option><option>Your first pet’s name?</option><option>Your mother’s maiden name?</option><option>Your favorite teacher?</option></select>
+      </div>
+      <div class="form-group"><label>Answer</label><input type="text" placeholder="Enter your answer"></div>
+      <div class="form-group"><label>New Password</label><input type="password" placeholder="Enter new password"></div>
+      <div class="form-group"><label>Confirm Password</label><input type="password" placeholder="Re-enter password"></div>
+      <button type="submit">💾 Save Changes</button>
+      <a href="{{ url_for('logout_page') }}" class="logout">🚪 Logout</a>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 CryptexQ Project — Secure Quantum Messaging</p>
+</footer>
+
+<script>
+function toggleMenu() {
+  document.getElementById("nav-links").classList.toggle("active");
+}
+
+// Avatar upload preview
+document.getElementById("avatarUpload").addEventListener("change", function(event) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      document.getElementById("avatarPreview").src = e.target.result;
+      document.getElementById("avatarPreview").style.display = "block";
+      document.getElementById("avatarText").style.display = "none";
+    }
+    reader.readAsDataURL(file);
+  }
+});
+</script>
+
+</body>
+</html>
